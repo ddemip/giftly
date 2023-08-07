@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=giftly
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin123
+      - MYSQL_ROOT_PASSWORD=root
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -u$$MYSQL_USER -p$$MYSQL_PASSWORD" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+  web:
+    build: .
+    entrypoint: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SUPERUSER_EMAIL=admin@giftly.ee
+      - DJANGO_SUPERUSER_PASSWORD=admin123
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  dbdata:
