@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
@@ -43,8 +43,8 @@ def home(request):
 
 
 def all_products(request, pk):
-    gifts = Gift.all(), pk=pk
+    gifts = Gift.objects.all(), pk=pk
 
 
-def product_detail(request, pk):
-    prd = Gift.objects.get(id=id), pk=pk
+def product_detail(self):
+    return get_object_or_404(Gift, id=self.request.query_params['id'])
