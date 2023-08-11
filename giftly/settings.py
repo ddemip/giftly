@@ -80,7 +80,7 @@ DATABASES = {
         'USER': 'admin',
         'PASSWORD': 'admin123',
         'HOST': 'db',   # Service name from docker-compose.yml
-        'PORT': '3306', # Default MySQL port
+        'PORT': '3306',  # Default MySQL port
     }
 }
 
