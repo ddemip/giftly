@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products - Giftly</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header-content">
+                <h1>Welcome to Giftly!</h1>
+                <p>Your destination for exciting activities and experiences in Estonia.</p>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+                <div class="languages">
+                    <span class="language">EN</span>
+                    <span class="language">EE</span>
+                </div>
+            </div>
+
+        </header>
+        <main class="content">
+            <div class="products-list">
+                <h2>All Products</h2>
+                <ul>
+                    {% for product in products %}
+                    <li>
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.description }}</p>
+                        <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </main>
+        <footer class="footer">
+            <p>&copy; 2023 Giftly. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
