@@ -42,10 +42,6 @@ def home(request):
     return render(request, "home.html")
 
 
-def all_products(request, pk):
-    gifts = Gift.objects.all(), pk=pk
-
-
 def product_detail(self):
     return get_object_or_404(Gift, id=self.request.query_params['id'])
 
