@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from .models import Product  # Product model missing
 
 def register(request):
     if request.method == "POST":
@@ -48,3 +48,15 @@ def all_products(request, pk):
 
 def product_detail(self):
     return get_object_or_404(Gift, id=self.request.query_params['id'])
+
+
+def all_products(request):
+    products = Product.objects.all()  # Retrieve all products from the database
+    context = {'products': products}
+    return render(request, 'all_products.html', context)
+
+
+def product_detail_view(request, product_id):
+    product = Product.objects.get(id=product_id)
+    context = {'product': product}
+    return render(request, 'product_detail.html', context)
