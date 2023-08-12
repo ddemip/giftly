@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,151 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Detail</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <style>
-        /* Additional styles for the popup */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
+    <link rel="stylesheet" href="{% static 'popup.css' %}">
 
-        .popup-content {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 80%;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .popup-content img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        .popup-content h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .popup-content p {
-            margin-bottom: 10px;
-        }
-
-        .popup-content button {
-            background-color: #2196F3;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .popup-content button:hover {
-            background-color: #1E88E5;
-        }
-
-        .popup-content #closePopup {
-            background-color: #ccc;
-            color: #333;
-            margin-top: 10px;
-        }
-    </style>
 </head>
 <body>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
-    <header class="header">
-        <div class="header-content">
-            <h1>Welcome to Giftly!</h1>
-            <p>Your destination for exciting activities and experiences in Estonia.</p>
-        </div>
-        <div class="header-actions">
-            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
-            <div class="languages">
-                <span class="language">EN</span>
-                <span class="language">EE</span>
-            </div>
-        </div>
-    </header>
-    <div class="header-bar">
-        <div class="cart-button">
-            <a href="{% url 'cart' %}" class="btn btn-cart">
-                <i class="fas fa-shopping-cart"></i> Cart
-            </a>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../static/style.css">
+<header class="header">
+    <div class="header-content">
+        <h1>Welcome to Giftly!</h1>
+        <p>Your destination for exciting activities and experiences in Estonia.</p>
+    </div>
+    <div class="header-actions">
+        {#            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>#}
+        <div class="languages">
+            <span class="language">EN</span>
+            <span class="language">EE</span>
         </div>
     </div>
-    <div class="sidebar">
-        <form class="search-form">
-            <label for="category-location">Location:</label>
-            <select id="category-location" name="location">
-                <option value="tallinn">Tallinn</option>
-                <option value="tartu">Tartu</option>
-                <option value="parnu">Pärnu</option>
-                <!-- Add more location options as needed -->
-            </select>
-            <label for="category-type">Activity Type:</label>
-            <select id="category-type" name="activity_type">
-                <option value="adventure">Adventure</option>
-                <option value="culture">Culture</option>
-                <option value="food">Food</option>
-                <!-- Add more activity type options as needed -->
-            </select>
-            <button type="submit" class="btn btn-search">Search</button>
-        </form>
+</header>
+<div class="header-bar">
+    <div class="cart-button">
+        {#            <a href="{% url 'cart' %}" class="btn btn-cart">#}
+        <i class="fas fa-shopping-cart"></i> Cart
+        </a>
     </div>
-    <main class="content">
-        <div class="featured-products">
-            <div class="row">
-                <div class="product">
-                    <img src="product1.jpg" alt="Product 1">
-                    <h3>Product 1</h3>
-                    <p>Description of Product 1</p>
-                    <a href="#" class="btn btn-primary">View Details</a>
-                </div>
-                <div class="product">
-                    <img src="product2.jpg" alt="Product 2">
-                    <h3>Product2</h3>
-                    <p>Description of Product 2</p>
-                    <a href="#" class="btn btn-primary">View Details</a>
-                </div>
-                <div class="product">
-                    <img src="product3.jpg" alt="Product 3">
-                    <h3>Product 3</h3>
-                    <p>Description of Product 3</p>
-                    <a href="#" class="btn btn-primary">View Details</a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="product">
-                    <img src="product4.jpg" alt="Product 4">
-                    <h3>Product4</h3>
-                    <p>Description of Product 4</p>
-                    <a href="#" class="btn btn-primary">View Details</a>
-                </div>
-                <div class="product">
-                    <img src="product5.jpg" alt="Product 5">
-                    <h3>Product 5</h3>
-                    <p>Description of Product 5</p>
-                    <a href="#" class="btn btn-primary">View Details</a>
-                </div>
-                <div class="product">
-                    <img src="product6.jpg" alt="Product 6">
-                    <h3>Product 6</h3>
-                    <p>Description of Product 6</p>
-                    <a href="#" class="btn btn-primary">View Details</a>
-                </div>
-            </div>
-        </div>
-    </main>
+</div>
+{#<div class="sidebar">#}
+{#    <form class="search-form">#}
+{#        <label for="category-location">Location:</label>#}
+{#        <select id="category-location" name="location">#}
+{#            <option value="tallinn">Tallinn</option>#}
+{#            <option value="tartu">Tartu</option>#}
+{#            <option value="parnu">Pärnu</option>#}
+{#            <!-- Add more location options as needed -->#}
+{#        </select>#}
+{#        <label for="category-type">Activity Type:</label>#}
+{#        <select id="category-type" name="activity_type">#}
+{#            <option value="adventure">Adventure</option>#}
+{#            <option value="culture">Culture</option>#}
+{#            <option value="food">Food</option>#}
+{#            <!-- Add more activity type options as needed -->#}
+{#        </select>#}
+{#        <button type="submit" class="btn btn-search">Search</button>#}
+{#    </form>#}
+{#</div>#}
+<main class="content">
+    <div class="products-list">
+        <h2>All Products</h2>
+        <ul>
+            {% for product in products %}
+                <li>
+                    <img src="{% static product.thumbnail %}" alt="{{ product.title }}" width="200" height="200">
+                    <h3>{{ product.title }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p>{{ product.price }}€</p>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</main>
 
 <footer class="footer">
     <p>&copy; 2023 Giftly. All rights reserved.</p>
@@ -157,36 +75,36 @@
 </body>
 </html>
 
-        <!-- Popup for product detail -->
-        <div class="popup-overlay">
-            <div class="popup-content">
-                <!-- Product details -->
-                <img src="product_image.jpg" alt="Product Image">
-                <h2>Product Name</h2>
-                <p>Description of the product.</p>
-                <p>Price: $99.99</p>
-                <button>Add to Cart</button>
+<!-- Popup for product detail -->
+<div class="popup-overlay">
+    <div class="popup-content">
+        <!-- Product details -->
+        <img src="{% static product.thumbnail %}" alt="{{ product.title }}" width="200" height="200">
+        <h3>{{ product.title }}</h3>
+        <p>{{ product.description }}</p>
+        <p>{{ product.price }}€</p>
+        <button>Add to Cart</button>
 
-                <!-- Close button -->
-                <button id="closePopup">Close</button>
-            </div>
-        </div>
+        <!-- Close button -->
+        <button id="closePopup">Close</button>
     </div>
+</div>
+</div>
 
-    <script>
-        // JavaScript to show/hide the popup
-        const popupOverlay = document.querySelector('.popup-overlay');
-        const closePopupBtn = document.getElementById('closePopup');
+<script>
+    // JavaScript to show/hide the popup
+    const popupOverlay = document.querySelector('.popup-overlay');
+    const closePopupBtn = document.getElementById('closePopup');
 
-        function openPopup() {
-            popupOverlay.style.display = 'flex';
-        }
+    function openPopup() {
+        popupOverlay.style.display = 'flex';
+    }
 
-        function closePopup() {
-            popupOverlay.style.display = 'none';
-        }
+    function closePopup() {
+        popupOverlay.style.display = 'none';
+    }
 
-        closePopupBtn.addEventListener('click', closePopup);
-    </script>
+    closePopupBtn.addEventListener('click', closePopup);
+</script>
 </body>
 </html>
