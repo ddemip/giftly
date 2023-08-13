@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Product  # Product model missing
 
+
 def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -15,7 +16,7 @@ def register(request):
             return redirect("login")
     else:
         form = UserCreationForm()
-    return render(request, "registration/register.html", {"form": form})
+    return render(request, "register.html", {"form": form})
 
 
 def user_login(request):
@@ -28,7 +29,7 @@ def user_login(request):
             return redirect("home")
     else:
         form = AuthenticationForm()
-    return render(request, "registration/login.html", {"form": form})
+    return render(request, "login.html", {"form": form})
 
 
 def user_logout(request):
@@ -37,9 +38,9 @@ def user_logout(request):
     return redirect("home")
 
 
-
 def home(request):
     return render(request, "home.html")
+
 
 def all_products(request):
     products = Product.objects.all()  # Retrieve all products from the database
