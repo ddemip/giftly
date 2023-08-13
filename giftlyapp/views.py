@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Product  # Product model missing
+from .models import Product
 
 def register(request):
     if request.method == "POST":
