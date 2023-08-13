@@ -37,14 +37,9 @@ def user_logout(request):
     return redirect("home")
 
 
-@login_required
+
 def home(request):
     return render(request, "home.html")
-
-
-def product_detail(self):
-    return get_object_or_404(Gift, id=self.request.query_params['id'])
-
 
 def all_products(request):
     products = Product.objects.all()  # Retrieve all products from the database
@@ -53,6 +48,7 @@ def all_products(request):
 
 
 def product_detail_view(request, product_id):
+    products = Product.objects.all()
     product = Product.objects.get(id=product_id)
-    context = {'product': product}
+    context = {'products': products, 'product': product}
     return render(request, 'product_detail.html', context)

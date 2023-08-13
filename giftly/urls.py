@@ -8,7 +8,7 @@ urlpatterns = [
     # All Products view
     path('products/', views.all_products, name='all_products'),
     # Product Detail view
-    path('products/<int:product_id>/', views.product_detail, name='product_detail'),
+    path('products/<int:product_id>/', views.product_detail_view, name='product_detail'),
 
     path('admin/', admin.site.urls),
 ]
