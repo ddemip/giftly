@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+      <title>Login</title>
+  </head>
+
+  <body>
+    <div class="relative flex flex-col justify-center min-h-screen overflow-hidden">
+        <h1 class="text-3xl font-semibold text-center text-blue-400">Login</h1>
+        <form class="mt-5">
+          <div>
+            <label for="username" class="block text-sm text-gray-800">Username:</label>
+            <input type="text" id="username" name="username"
+            class="block w-full px-3 py-2 mt-3 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-50">
+          </div>
+          <div class="mt-4">
+            <div>
+              <label for="password" class="block text-sm text-gray-800">Password:</label>
+                <label>
+                    <input type="password" id="pwd" name="pwd" minlength="8"
+                      class="block w-full px-4 py-2 mt-3 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                </label>
+            </div>
+            <a href="#" class="text-xs text-gray-600 hover:underline">Forgot password?</a>
+            <div class="mt-6">
+              <button
+                class="w-full px-4 py-2 transform bg-yellow-400 rounded-md hover:bg-green-600 focus:outline-none focus:bg-purple-600">
+                Login
+              </button>
+            </div>
+              </div>
+        </form>
+        <p class="mt-8 text-xs font-light text-center text-gray-700"> Don't have an account? <a href="#"
+            class="font-medium text-red-600 hover:underline">Sign up</a></p>
+      </div>
+
+  </body>
+
+</html>
