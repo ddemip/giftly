@@ -3,8 +3,21 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 
+# class GiftUser(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     email = models.CharField(max_length=255)
+#     password = models.CharField(max_length=64)
+#     first_name = models.CharField(max_length=255)
+#     last_name = models.CharField(max_length=255)
+#     role = models.CharField(max_length=10)
+#
+#     def __str__(self):
+#         return self.user
+#
+#     def get_absolute_url(self):
+#         return reverse("user_detail", args=[str(self.pk)])
+
 class Category(models.Model):
-    parent = models.ForeignKey('self', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -12,7 +25,7 @@ class Category(models.Model):
 
 
 class Customer(models.Model):
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     session_uuid = models.CharField(max_length=255)
 
     def __str__(self):
@@ -25,7 +38,7 @@ class Customer(models.Model):
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    description = models.CharField(max_length=1000, blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True, null=True)
     thumbnail = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
@@ -41,13 +54,13 @@ class ShoppingCart(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    shopping_cart = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE)
+    shopping_cart_id = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE)
     recipient_email = models.CharField(max_length=255)
     total_cost = models.DecimalField(max_digits=7, decimal_places=2)
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.customer
+        return self.total_cost
 
 
 class PaymentDetail(models.Model):
@@ -56,4 +69,4 @@ class PaymentDetail(models.Model):
     status = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.order
+        return self.status
