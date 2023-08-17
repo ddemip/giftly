@@ -16,14 +16,22 @@ services:
       retries: 3
   web:
     build: .
-    entrypoint: ./start.sh
+    entrypoint:
+      - sh #says to use shell script
+      - -c #tells shell to execute next command
+      - |
+        if ! python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); exit(not User.objects.filter(username='admin').exists())"; then
+          python manage.py createsuperuser --username admin --no-input
+        fi
+        python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000
     command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     volumes:
       - .:/code
     ports:
       - "8000:8000"
     environment:
-      - DJANGO_SUPERUSER_EMAIL=admin@giftly.ee
+      - DJANGO_SUPERUSER_EMAIL=admin@giftly.ee #superuser username by default is admin, both should work
       - DJANGO_SUPERUSER_PASSWORD=admin123
     depends_on:
       db:
