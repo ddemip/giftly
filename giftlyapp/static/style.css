@@ -30,16 +30,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-left: 450px;
 }
 
 .header h1 {
-    margin-bottom: 0.3em; /* Add some spacing */
-    text-align: center; /* Center-align the heading */
+    margin-bottom: 0.4em;
+    text-align: center;
 }
 
 .header p {
-    margin: 0.5em 0;
-    text-align: center; /* Center-align the paragraph */
+
+    text-align: center;
 }
 
 .header-actions {
@@ -68,18 +69,18 @@
 }
 
 .header-bar {
-    background-color: khaki; /* Khaki green color */
-    height: 50px; /* Set height to 50px */
-    width: 100%; /* Take full width of the header */
+    background-color: khaki;
+    height: 50px;
+    width: 100%;
     position: absolute;
-    top: 100px; /* Align at the bottom of the header */
+    top: 100px;
 }
 
 .cart-button {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-right: 15px; /* Add some spacing from the edge */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
 }
 
 .btn-cart {
@@ -96,21 +97,47 @@
     font-size: 12px; /* Adjust font size */
     line-height: 1; /* Set line-height to 1 to center the text vertically */
     text-align: center; /* Center the text horizontally */
-
 }
 
 .btn-cart i {
     margin-right: 5px;
 }
 
+.btn-cart:hover {
+    background-color: #1E88E5; /* Darker color on hover */
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+    margin-left: 200px;
+}
+
+.btn-header {
+    background-color: #2196F3; /* Button color */
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px; /* Adjust padding */
+    border-radius: 5px;
+    margin-left: 40px; /* Add some spacing between buttons */
+    font-size: 20px; /* Adjust font size */
+    transition: background-color 0.2s;
+}
+
+.btn-header:hover {
+    background-color: #1E88E5; /* Darker color on hover */
+}
+
 /* Style for the sidebar */
 .sidebar {
-    background-color: #8BC34A; /* Lighter green color */
-    width: 200px; /* Adjust width as needed */
-    position: absolute; /* Fixed position */
-    top: 100px; /* Extend from the top of the viewport */
-    bottom: 0; /* Extend to the bottom of the viewport */
-    padding: 10px; /* Add some padding */
+    background-color: #8BC34A;
+    width: 200px;
+    position: absolute; /* test if it should be fixed */
+    top: 100px;
+    bottom: 0;
+    padding: 10px;
+    left: 0;
 }
 
 /* Style for the search form */
@@ -151,8 +178,8 @@
     padding: 20px;
     background-color: #f9f9f9;
     overflow: hidden; /* Clear the float and establish block formatting context */
-    margin-left: 220px;
-    margin-top: 60px;
+    left: 220px;
+    top: 60px;
     width: 85%; /* Take up full viewport width */
     height: 100%; /* Occupy available vertical space */
 }
@@ -189,9 +216,12 @@
     border-radius: 5px;
 }
 
-/* Add flex-grow property to .content to make it expand and push footer down */
+
 .content {
     flex-grow: 1;
+    margin-left: 200px;
+    margin-top: 50px;
+    background-color: whitesmoke;
 }
 
 /* Additional styling for the sticky footer if needed */
@@ -203,4 +233,43 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+/* Media query for small screens */
+@media (max-width: 768px) {
+    .header-content {
+        margin-left: 0;
+        text-align: center; /* Center align header content on smaller screens */
+    }
+
+    .header-buttons {
+        margin-left: 0;
+        justify-content: center; /* Center align header buttons on smaller screens */
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px; /* Add padding to sidebar for breathing space on smaller screens */
+    }
+
+    .search-form select,
+    .search-form button {
+        padding: 10px; /* Increase padding for select and button on smaller screens */
+    }
+
+    .featured-products {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .product {
+        padding: 10px;
+    }
+
+    .content {
+        margin-left: 0;
+        margin-top: 20px;
+    }
 }

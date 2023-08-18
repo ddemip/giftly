@@ -3,8 +3,12 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Product
+from .models import Customer, ShoppingCart, Product
 from .forms import UserProfileUpdateForm, CustomerProfileUpdateForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DetailView
+from django.contrib.auth.models import User
+from .decorators import allow_anonymous
 
 
 def register(request):
@@ -54,6 +58,30 @@ def product_detail_view(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     context = {'products': products, 'product': product}
     return render(request, 'product_detail.html', context)
+
+
+@allow_anonymous
+def cart_view(request):
+    try:
+        customer = Customer.objects.get(user=request.user)
+    except Customer.DoesNotExist:
+        customer = None
+
+    cart_items = []
+    if customer:
+        cart_items = ShoppingCart.objects.filter(customer=customer)
+
+    context = {
+        'cart_items': cart_items
+    }
+
+    return render(request, 'shopping_cart.html', context)
+
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'profile.html'
+    context_object_name = 'user'
 
 
 @login_required

@@ -1,101 +1,58 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Giftly!</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
-<body>
-    <div class="wrapper">
-        <header class="header">
-            <div class="header-content">
-                <h1>Welcome to Giftly!</h1>
-                <p>Your destination for exciting activities and experiences in Estonia.</p>
-            </div>
-            <div class="header-actions">
-{#              <a href="{% url 'login' %}" class="btn btn-primary">Login</a>#}
-                <div class="languages">
-                    <span class="language">EN</span>
-                    <span class="language">EE</span>
-                </div>
-            </div>
-        </header>
-        <div class="header-bar">
-            <div class="cart-button">
-{#                <a href="{% url 'cart' %}" class="btn btn-cart">#}
-                    <i class="fas fa-shopping-cart"></i> Cart
-                </a>
-            </div>
-        </div>
-        <div class="sidebar">
-            <form class="search-form">
-                <button type="submit" class="btn btn-search">Search</button>
-                <label for="category-location">Location:</label>
-                <select id="category-location" name="location">
-                    <option value="tallinn">Tallinn</option>
-                    <option value="tartu">Tartu</option>
-                    <option value="parnu">Pärnu</option>
-                    <!-- Add more location options as needed -->
-                </select>
-                <label for="category-type">Activity Type:</label>
-                <select id="category-type" name="activity_type">
-                    <option value="adventure">Adventure</option>
-                    <option value="culture">Culture</option>
-                    <option value="food">Food</option>
-                    <!-- Add more activity type options as needed -->
-                </select>
-            </form>
-        </div>
-        <main class="content">
-            <div class="featured-products">
-                <div class="row">
-                    <div class="product">
-                        <img src="product1.jpg" alt="Product 1">
-                        <h3>Product 1</h3>
-                        <p>Description of Product 1</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                    <div class="product">
-                        <img src="product2.jpg" alt="Product 2">
-                        <h3>Product2</h3>
-                        <p>Description of Product 2</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                    <div class="product">
-                        <img src="product3.jpg" alt="Product 3">
-                        <h3>Product 3</h3>
-                        <p>Description of Product 3</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="product">
-                        <img src="product4.jpg" alt="Product 4">
-                        <h3>Product4</h3>
-                        <p>Description of Product 4</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                    <div class="product">
-                        <img src="product5.jpg" alt="Product 5">
-                        <h3>Product 5</h3>
-                        <p>Description of Product 5</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                    <div class="product">
-                        <img src="product6.jpg" alt="Product 6">
-                        <h3>Product 6</h3>
-                        <p>Description of Product 6</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-        </main>
 
-    <footer class="footer">
-        <p>&copy; 2023 Giftly. All rights reserved.</p>
-    </footer>
+{% block content %}
+<main class="content">
+    <div class="featured-products">
+        <div class="row">
+            <!-- Product 1 -->
+            <div class="product">
+                <img src="{% static 'product1.jpg' %}" alt="Product 1">
+                <h3>Product 1</h3>
+                <p>Description of Product 1</p>
+                <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+            <!-- Product 2 -->
+            <div class="product">
+                <img src="{% static 'product2.jpg' %}" alt="Product 2">
+                <h3>Product 2</h3>
+                <p>Description of Product 2</p>
+                <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+            <!-- Product 3 -->
+            <div class="product">
+                <img src="{% static 'product3.jpg' %}" alt="Product 3">
+                <h3>Product 3</h3>
+                <p>Description of Product 3</p>
+                <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Product 4 -->
+            <div class="product">
+                <img src="{% static 'product4.jpg' %}" alt="Product 4">
+                <h3>Product 4</h3>
+                <p>Description of Product 4</p>
+                <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+            <!-- Product 5 -->
+            <div class="product">
+                <img src="{% static 'product5.jpg' %}" alt="Product 5">
+                <h3>Product 5</h3>
+                <p>Description of Product 5</p>
+                <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+            <!-- Product 6 -->
+            <div class="product">
+                <img src="{% static 'product6.jpg' %}" alt="Product 6">
+                <h3>Product 6</h3>
+                <p>Description of Product 6</p>
+                <a href="#" class="btn btn-primary">View Details</a>
+            </div>
+            <div class="explore-button">
+                <a href="{% url 'all_products' %}" class="btn btn-primary">Explore All Products</a>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</main>
+{% endblock %}
