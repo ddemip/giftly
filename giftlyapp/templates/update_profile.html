@@ -1,17 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- ... -->
-</head>
-<body>
-    <!-- ... -->
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <!-- ... -->
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="content">
+        <div class="user-profile">
+            <h2>User Profile</h2>
+            <p>Username: {{ user.username }}</p>
+            <p>First Name: {{ user.first_name }}</p>
+            <p>Last Name: {{ user.last_name }}</p>
+            <p>Email: {{ user.email }}</p>
+            <!-- Add more fields as needed -->
+        </div>
+    </main>
+
+    <!-- Pop-up modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <p>{% if messages %}{% for message in messages %}{{ message }}{% endfor %}{% endif %}</p>
+            <button id="closeModal">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Show the modal when the page loads if there are messages
+        window.addEventListener('load', function() {
+            if ("{{ messages }}" !== "") {
+                document.getElementById('successModal').style.display = 'block';
+            }
+        });
+
+        // Close the modal when the close button is clicked
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('successModal').style.display = 'none';
+        });
+    </script>
+{% endblock %}

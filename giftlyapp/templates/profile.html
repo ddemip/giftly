@@ -1,38 +1,23 @@
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
-<body>
-    <header class="header">
-        <div class="header-content">
-            <h1>Welcome to Giftly!</h1>
-            <p>Your destination for exciting activities and experiences in Estonia.</p>
-        </div>
-        <div class="header-actions">
-            <div class="languages">
-                <span class="language">EN</span>
-                <span class="language">EE</span>
-            </div>
-        </div>
-    </header>
 
+{% block content %}
     <main class="content">
         <div class="user-profile">
             <h2>User Profile</h2>
-            <form id="update-profile-form" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn btn-primary">Update Profile</button>
-            </form>
+            <p>Username: {{ user.username }}</p>
+            <p>First Name: {{ user.first_name }}</p>
+            <p>Last Name: {{ user.last_name }}</p>
+            <p>Email: {{ user.email }}</p>
+            <!-- Add more fields as needed -->
         </div>
+        <!-- Display messages -->
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </main>
-
-    <footer class="footer">
-        <p>&copy; 2023 Giftly. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+{% endblock %}

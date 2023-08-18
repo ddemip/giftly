@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Giftly!</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header-content">
+                <h1>Welcome to Giftly!</h1>
+                <p>Your destination for exciting activities and experiences in Estonia.</p>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+                <div class="languages">
+                    <span class="language">EN</span>
+                    <span class="language">EE</span>
+                </div>
+            </div>
+        </header>
+        <div class="header-bar">
+            <div class="header-buttons">
+                <a href="{% url 'home' %}" class="btn-header">Home</a>
+                <a href="#" class="btn-header">Best Sellers</a>
+                <a href="#" class="btn-header">Deals/Featured</a>
+                <a href="{% url 'all_products' %}" class="btn-header">All Products</a>
+                <a href="{% url 'profile' %}" class="btn-header">Account</a>
+            </div>
+            <div class="cart-button">
+                <a href="{% url 'cart' %}" class="btn btn-cart">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                </a>
+            </div>
+        </div>
+        <div class="sidebar">
+            <form class="search-form">
+                <button type="submit" class="btn btn-search">Search</button>
+                <label for="category-location">Location:</label>
+                <select id="category-location" name="location">
+                    <option value="tallinn">Tallinn</option>
+                    <option value="tartu">Tartu</option>
+                    <option value="parnu">Pärnu</option>
+                    <option value="parnu">Muu</option>
+                    <!-- Add more location options as needed -->
+                </select>
+                <label for="category-type">Activity Type:</label>
+                <select id="category-type" name="activity_type">
+                    <option value="adventure">Adventure</option>
+                    <option value="culture">Culture</option>
+                    <option value="food">Food</option>
+                    <!-- Add more activity type options as needed -->
+                </select>
+            </form>
+        </div>
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+        <footer class="footer">
+            <p>&copy; 2023 Giftly. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

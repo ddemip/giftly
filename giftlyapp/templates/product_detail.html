@@ -1,81 +1,21 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Detail</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-    <link rel="stylesheet" href="{% static 'popup.css' %}">
 
-</head>
-<body>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../static/style.css">
-<header class="header">
-    <div class="header-content">
-        <h1>Welcome to Giftly!</h1>
-        <p>Your destination for exciting activities and experiences in Estonia.</p>
-    </div>
-    <div class="header-actions">
-        {#            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>#}
-        <div class="languages">
-            <span class="language">EN</span>
-            <span class="language">EE</span>
-        </div>
-    </div>
-</header>
-<div class="header-bar">
-    <div class="cart-button">
-        {#            <a href="{% url 'cart' %}" class="btn btn-cart">#}
-        <i class="fas fa-shopping-cart"></i> Cart
-        </a>
-    </div>
-</div>
-{#<div class="sidebar">#}
-{#    <form class="search-form">#}
-{#        <label for="category-location">Location:</label>#}
-{#        <select id="category-location" name="location">#}
-{#            <option value="tallinn">Tallinn</option>#}
-{#            <option value="tartu">Tartu</option>#}
-{#            <option value="parnu">Pärnu</option>#}
-{#            <!-- Add more location options as needed -->#}
-{#        </select>#}
-{#        <label for="category-type">Activity Type:</label>#}
-{#        <select id="category-type" name="activity_type">#}
-{#            <option value="adventure">Adventure</option>#}
-{#            <option value="culture">Culture</option>#}
-{#            <option value="food">Food</option>#}
-{#            <!-- Add more activity type options as needed -->#}
-{#        </select>#}
-{#        <button type="submit" class="btn btn-search">Search</button>#}
-{#    </form>#}
-{#</div>#}
+{% block title %}Product Detail{% endblock %}
+
+{% block content %}
 <main class="content">
-    <div class="products-list">
-        <h2>All Products</h2>
-        <ul>
-            {% for product in products %}
-                <li>
-                    <img src="{% static product.thumbnail %}" alt="{{ product.title }}" width="200" height="200">
-                    <h3>{{ product.title }}</h3>
-                    <p>{{ product.description }}</p>
-                    <p>{{ product.price }}€</p>
-                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
-                </li>
-            {% endfor %}
-        </ul>
+    <div class="product-detail">
+        <img src="{% static product.thumbnail %}" alt="{{ product.title }}" width="200" height="200">
+        <h3>{{ product.title }}</h3>
+        <p>{{ product.description }}</p>
+        <p>{{ product.price }}€</p>
+        <button id="openPopup">View Details</button>
     </div>
 </main>
+{% endblock %}
 
-<footer class="footer">
-    <p>&copy; 2023 Giftly. All rights reserved.</p>
-</footer>
-</body>
-</html>
-
-<!-- Popup for product detail -->
+{% block popup %}
 <div class="popup-overlay">
     <div class="popup-content">
         <!-- Product details -->
@@ -89,11 +29,11 @@
         <button id="closePopup">Close</button>
     </div>
 </div>
-</div>
 
 <script>
     // JavaScript to show/hide the popup
     const popupOverlay = document.querySelector('.popup-overlay');
+    const openPopupBtn = document.getElementById('openPopup');
     const closePopupBtn = document.getElementById('closePopup');
 
     function openPopup() {
@@ -104,7 +44,7 @@
         popupOverlay.style.display = 'none';
     }
 
+    openPopupBtn.addEventListener('click', openPopup);
     closePopupBtn.addEventListener('click', closePopup);
 </script>
-</body>
-</html>
+{% endblock %}
