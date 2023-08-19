@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Customer, ShoppingCart, Product
-from .forms import UserProfileUpdateForm, CustomerProfileUpdateForm
+from .forms import UserProfileUpdateForm, CustomerProfileUpdateForm, UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
@@ -12,35 +11,40 @@ from .decorators import allow_anonymous
 
 
 def register(request):
+    form = UserCreationForm()
+
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get("username")
-            messages.success(request, f"Account created for {username}!")
-            return redirect("login")
-    else:
-        form = UserCreationForm()
-    return render(request, "registration/register.html", {"form": form})
+            user = form.cleaned_data.get('username')
+            messages.success(request, f'Account was created for: {user}')
+            return redirect('login')
+
+    context = {'form': form}
+    return render(request, "registration/register.html", context)
 
 
 def user_login(request):
     if request.method == "POST":
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
             login(request, user)
-            messages.success(request, f"You are now logged in as {user.username}")
             return redirect("home")
-    else:
-        form = AuthenticationForm()
-    return render(request, "registration/login.html", {"form": form})
+        else:
+            messages.info(request, 'username OR password is incorrect')
+    context = {}
+    return render(request, 'registration/login.html', context)
 
 
 def user_logout(request):
     logout(request)
     messages.success(request, "You have been logged out")
-    return redirect("home")
+    return redirect("login")
 
 
 def home(request):
