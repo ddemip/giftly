@@ -1,33 +1,38 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-      <title>Password reset</title>
-  </head>
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+    <title>Password reset</title>
+</head>
 
-  <body>
-    <div class="relative flex flex-col justify-center min-h-screen overflow-hidden">
-        <h1 class="text-3xl font-semibold text-center text-blue-400">Reset your password</h1>
-        <form class="mt-5">
-          <div>
-            <label for="username" class="block text-sm text-gray-800">Enter your username:</label>
-            <input type="text" id="username" name="username"
-            class="block w-full px-3 py-2 mt-3 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-50">
-          </div>
-            <div class="mt-6">
-              <button
-                class="w-full px-4 py-2 transform bg-yellow-400 rounded-md hover:bg-green-600 focus:outline-none focus:bg-purple-600" onclick=alert("Success!")>
-                Reset password
-              </button>
+<body>
+    <div class="user_card">
+        <div class="d-flex justify-content-center">
+            <h3 id="form-title">Reset your password</h3>
+        </div>
+        <div class="d-flex justify-content-center form_container">
+            <form class="mt-5">
+                <div>
+                    <label for="username">Enter your username:</label>
+                    <input type="text" id="username" name="username" class="form-control">
+                </div>
+                <div class="mt-6">
+                    <button class="btn login_btn" onclick="alert('Success!')">
+                        Reset password
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="mt-4">
+            <div class="d-flex justify-content-center links">
+                Do you want to go back? <a href="login.html" class="ml-2">Login</a>
             </div>
-        </form>
-        <p class="mt-8 text-xs font-light text-center text-gray-700"> Do you want to go back? <a href="login.html"
-            class="font-medium text-red-600 hover:underline">Login</a></p>
-      </div>
-
-  </body>
+        </div>
+    </div>
+</body>
 
 </html>

@@ -7,7 +7,6 @@ from .forms import UserProfileUpdateForm, CustomerProfileUpdateForm, UserCreatio
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
-from .decorators import allow_anonymous
 
 
 def register(request):
@@ -44,7 +43,7 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     messages.success(request, "You have been logged out")
-    return redirect("login")
+    return redirect("home")
 
 
 def home(request):
@@ -64,12 +63,14 @@ def product_detail_view(request, product_id):
     return render(request, 'product_detail.html', context)
 
 
-@allow_anonymous
 def cart_view(request):
-    try:
-        customer = Customer.objects.get(user=request.user)
-    except Customer.DoesNotExist:
-        customer = None
+    customer = None
+
+    if request.user.is_authenticated:
+        try:
+            customer = Customer.objects.get(user=request.user)
+        except Customer.DoesNotExist:
+            pass
 
     cart_items = []
     if customer:
@@ -118,4 +119,15 @@ def update_profile(request):
             return redirect('profile')
     else:
         form = UserProfileUpdateForm(instance=request.user)
-    return render(request, 'update_profile.html', {'form': form})
+
+    context = {'form': form}
+    return render(request, 'update_profile.html', context)
+
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'profile.html'
+    context_object_name = 'user'
+
+    def get_object(self, queryset=None):
+        return self.request.user

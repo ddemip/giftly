@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'giftly',
         'USER': 'admin',
         'PASSWORD': 'admin123',
-        'HOST': 'db',   # Service name from docker-compose.yml
+        'HOST': '172.18.0.2',   # Service name from docker-compose.yml
         'PORT': '3306',  # Default MySQL port
     }
 }

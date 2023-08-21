@@ -16,7 +16,8 @@ urlpatterns = [
     path('profile/update/', views.update_profile, name='update_profile'),
     path('cart/', views.cart_view, name='cart'),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login_1'),
-    path('profile/', views.UserProfileView.as_view(), name='profile')
+    path('profile/', views.UserProfileView.as_view(), name='profile'),
+    path('profile/<int:pk>/', views.UserProfileView.as_view(), name='profile')
 ]
 
 if settings.DEBUG:
