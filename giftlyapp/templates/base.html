@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +16,17 @@
                 <p>Your destination for exciting activities and experiences in Estonia.</p>
             </div>
             <div class="header-actions">
-                <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+                <span id="hello-msg" >Hello: {{request.user}}</span>
+
+                <li class="nav-item text-white">
+                    {% if request.user.is_authenticated %}
+                <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                    {% endif %}
+                </li>
+
+
                 <div class="languages">
                     <span class="language">EN</span>
                     <span class="language">EE</span>
