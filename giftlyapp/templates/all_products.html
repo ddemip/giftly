@@ -7,11 +7,11 @@
         <ul>
             {% for product in products %}
             <li>
-                <img src="{% static product.thumbnail %}" alt="{{ product.title }}" width="200" height="200">
+                <img src="{{ product.thumbnail.url }}" alt="{{ product.title }}" width="200" height="200">
                 <h3>{{ product.title }}</h3>
                 <p>{{ product.description }}</p>
                 <p>{{ product.price }}€</p>
-                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
+                <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Details</a>
             </li>
             {% endfor %}
         </ul>

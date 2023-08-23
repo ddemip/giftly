@@ -56,9 +56,9 @@ def all_products(request):
     return render(request, 'all_products.html', context)
 
 
-def product_detail_view(request, product_id):
+def product_detail_view(request, slug):
     products = Product.objects.all()
-    product = get_object_or_404(Product, id=product_id)
+    product = get_object_or_404(Product, slug=slug)
     context = {'products': products, 'product': product}
     return render(request, 'product_detail.html', context)
 

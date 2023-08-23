@@ -14,6 +14,8 @@ from pathlib import Path
 from django.contrib.staticfiles.urls import static
 from django.conf import settings
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -82,7 +84,7 @@ DATABASES = {
         'NAME': 'giftly',
         'USER': 'admin',
         'PASSWORD': 'admin123',
-        'HOST': '172.18.0.2',   # Service name from docker-compose.yml
+        'HOST': 'db',   # Service name from docker-compose.yml
         'PORT': '3306',  # Default MySQL port
     }
 }
@@ -124,9 +126,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
+# STATICFILES_DIRS = [BASE_DIR / "static/"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Media
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
