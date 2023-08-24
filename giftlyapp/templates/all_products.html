@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block title %}
-{% if category %}{{ category.name }}{% else %}Товары{% endif %}
+{% if category %}{{ category.name }}{% else %}Products{% endif %}
 {% endblock %}
 {% block content %}
 <div id="sidebar">
-<h3>Категория</h3>
+<h3>Category</h3>
 <ul>
 <li {% if not category %}class="selected"{% endif %}>
-<a href="{% url 'product_list' %}">Все</a>
+<a href="{% url 'product_list' %}">ALL</a>
 </li>
 {% for c in categories %}
 <li {% if category.slug == c.slug %}class="selected" {% endif %}>
@@ -19,7 +19,7 @@
 </ul>
 </div>
 <div id="main" class="product-list">
-<h1>{% if category %}{{ category.name }}{% else %}Товар{% endif %}</h1>
+<h1>{% if category %}{{ category.name }}{% else %}Product{% endif %}</h1>
 {% for product in products %}
 <div class="item">
 <a href="{{ product.get_absolute_url }}">
