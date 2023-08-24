@@ -65,7 +65,8 @@ def all_products(request):
 def product_detail_view(request, slug):
     products = Product.objects.all()
     product = get_object_or_404(Product, slug=slug)
-    context = {'products': products, 'product': product}
+    cart_product_form = ShoppingCartAddProductForm()
+    context = {'products': products, 'product': product, 'cart_product_form': cart_product_form}
     return render(request, 'product_detail.html', context)
 
 
@@ -111,6 +112,7 @@ def update_profile(request):
 
     context = {'form': form}
     return render(request, 'update_profile.html', context)
+
 
 
 @require_POST
