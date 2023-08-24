@@ -114,6 +114,7 @@ def update_profile(request):
     return render(request, 'update_profile.html', context)
 
 
+
 @require_POST
 def cart_add(request, product_id):
     products = Product.objects.all()
