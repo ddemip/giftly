@@ -228,11 +228,16 @@
 .footer {
     background-color: #333;
     color: white;
-    padding: 1em;
+    padding: 20px 0;
     text-align: center;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 100%;
+}
+
+/* Add a margin to the bottom of the main content to create space above the footer */
+#main {
+    margin-bottom: 50px; /* Adjust the value as needed */
 }
 
 /* Media query for small screens */
@@ -272,4 +277,11 @@
         margin-left: 0;
         margin-top: 20px;
     }
+}
+
+/* Set the width and height of product images */
+.item img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover; /* Maintain aspect ratio while covering the entire space */
 }
