@@ -15,6 +15,19 @@
                 <h1>Welcome to Giftly!</h1>
                 <p>Your destination for exciting activities and experiences in Estonia.</p>
             </div>
+
+            <div class="cart">
+                {% with total_items=cart|length %}
+                {% if cart|length > 0  %}
+                Cart:
+                <a href="{%  url 'cart_detail' %}">
+                    {{total_items }} items ${{ cart.get_total_price }}
+                </a>
+                {% else %}
+                Cart is empty
+                {% endif %}
+                {% endwith %}
+            </div>
             <div class="header-actions">
                 <span id="hello-msg" >Hello: {{request.user}}</span>
                 <ul class="nav">
@@ -37,11 +50,11 @@
                 <a href="{% url 'home' %}" class="btn-header">Home</a>
                 <a href="#" class="btn-header">Best Sellers</a>
                 <a href="#" class="btn-header">Deals/Featured</a>
-                <a href="{% url 'all_products' %}" class="btn-header">All Products</a>
+                <a href="{% url 'product_list' %}" class="btn-header">All Products</a>
                 <a href="{% url 'profile' %}" class="btn-header">Account</a>
             </div>
             <div class="cart-button">
-                <a href="{% url 'cart' %}" class="btn btn-cart">
+                <a href="{% url 'cart_detail' %}" class="btn btn-cart">
                     <i class="fas fa-shopping-cart"></i> Cart
                 </a>
             </div>

@@ -11,6 +11,11 @@
         <p>{{ product.description }}</p>
         <p>{{ product.price }}€</p>
         <button id="openPopup">View Details</button>
+        <form action="{% url 'cart_add' product.id %}" method="POST">
+            {{cart_product_form}}
+            {% csrf_token %}
+        <input type="submit" value="Add to basket">
+        </form>
     </div>
 </main>
 {% endblock %}

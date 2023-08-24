@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CART_SESSION_ID = 'cart'
+
 
 # Application definition
 
@@ -65,6 +67,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'giftlyapp.context_processors.cart',
+
             ],
         },
     },
@@ -82,7 +86,7 @@ DATABASES = {
         'NAME': 'giftly',
         'USER': 'admin',
         'PASSWORD': 'admin123',
-        'HOST': '172.18.0.2',   # Service name from docker-compose.yml
+        'HOST': 'db',   # Service name from docker-compose.yml
         'PORT': '3306',  # Default MySQL port
     }
 }
