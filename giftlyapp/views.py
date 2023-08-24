@@ -59,11 +59,11 @@ def all_products(request):
     return render(request, 'all_products.html', context)
 
 
-def product_detail_view(request, id, slug):
-    product = get_object_or_404(Product, id=id, slug=slug)
-    cart_product_form = ShoppingCartAddProductForm()
-    return render(request, 'product_detail.html', {'product': product,
-                                                    'cart_product_form': cart_product_form})
+def product_detail_view(request, slug):
+    products = Product.objects.all()
+    product = get_object_or_404(Product, slug=slug)
+    context = {'products': products, 'product': product}
+    return render(request, 'product_detail.html', context)
 
 
 class UserProfileView(LoginRequiredMixin, DetailView):

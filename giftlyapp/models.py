@@ -1,23 +1,39 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, db_index=True)
-    slug = models.SlugField(max_length=100, unique=True)
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            orig_slug = slugify(self.name)
+            unique_slug = orig_slug
+            counter = 1
+
+            while Category.objects.filter(slug=unique_slug).exists():
+                unique_slug = '{}-{}'.format(orig_slug, counter)
+                counter += 1
+
+            self.slug = unique_slug
+
+        super(Category, self).save(*args, **kwargs)
 
     class Meta:
-        ordering = ('name',)
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
+        verbose_name_plural = 'categories'
+
+    def get_absolute_url(self):
+        return reverse('category_list', args=[self.slug])
 
     def __str__(self):
         return self.name
 
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     session_uuid = models.CharField(max_length=255)
 
     def __str__(self):
@@ -32,8 +48,29 @@ class Product(models.Model):
     name = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=150, db_index=True, unique=True)
     description = models.CharField(max_length=255, blank=True, null=True)
-    thumbnail = models.CharField(max_length=255)
+    thumbnail = models.ImageField(upload_to='products/')
     price = models.DecimalField(max_digits=5, decimal_places=2)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            orig_slug = slugify(self.title)
+            unique_slug = orig_slug
+            counter = 1
+
+            while Product.objects.filter(slug=unique_slug).exists():
+                unique_slug = '{}-{}'.format(orig_slug, counter)
+                counter += 1
+
+            self.slug = unique_slug
+
+        super(Product, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = 'products'
+
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[self.slug])
 
     class Meta:
         ordering = ('name',)

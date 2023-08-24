@@ -6,7 +6,7 @@
 {% block content %}
 <main class="content">
     <div class="product-detail">
-        <img src="{% static product.thumbnail %}" alt="{{ product.title }}" width="200" height="200">
+        <img src="{{ product.thumbnail.url }}" alt="{{ product.title }}" width="200" height="200">
         <h3>{{ product.title }}</h3>
         <p>{{ product.description }}</p>
         <p>{{ product.price }}€</p>
@@ -24,7 +24,7 @@
 <div class="popup-overlay">
     <div class="popup-content">
         <!-- Product details -->
-        <img src="{% static product.thumbnail %}" alt="{{ product.title }}" width="200" height="200">
+        <img src="{{ product.thumbnail.url }}" alt="{{ product.title }}" width="200" height="200">
         <h3>{{ product.title }}</h3>
         <p>{{ product.description }}</p>
         <p>{{ product.price }}€</p>

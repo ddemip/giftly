@@ -7,18 +7,17 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.home, name='home'),
-
-    path('product/', views.product_list, name='product_list'),
-
-    path('<int:id>/<slug:slug>', views.product_detail_view, name='product_detail'),
+    path('products/', views.all_products, name='all_products'),
     path('admin/', admin.site.urls),
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('profile/update/', views.update_profile, name='update_profile'),
+    path('cart/', views.cart_view, name='cart'),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login_1'),
     path('profile/', views.UserProfileView.as_view(), name='profile'),
     path('profile/<int:pk>/', views.UserProfileView.as_view(), name='profile'),
+    path('products/<slug:slug>/', views.product_detail_view, name='product_detail'),
 
     path('cart/', views.cart_detail, name='cart_detail'),
     path('add/<int:product_id>/', views.cart_add, name='cart_add'),
@@ -29,3 +28,8 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
