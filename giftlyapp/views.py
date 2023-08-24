@@ -113,8 +113,6 @@ def update_profile(request):
 @require_POST
 def cart_add(request, product_id):
     products = Product.objects.all()
-    print('Siin ma peaks tooteid printima')
-    print(products)
     cart = ShoppingCart(request)
     product = get_object_or_404(products, id=product_id)
     form = ShoppingCartAddProductForm(request.POST)
