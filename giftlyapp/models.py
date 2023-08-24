@@ -44,17 +44,16 @@ class Customer(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products',  on_delete=models.CASCADE, blank=True, null=True)
+    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=255, db_index=True)
-    slug = models.CharField(max_length=150, db_index=True, unique=True)
+    slug = models.SlugField(max_length=150, db_index=True, unique=True)
     description = models.CharField(max_length=255, blank=True, null=True)
     thumbnail = models.ImageField(upload_to='products/')
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            orig_slug = slugify(self.title)
+            orig_slug = slugify(self.name)
             unique_slug = orig_slug
             counter = 1
 
@@ -68,21 +67,14 @@ class Product(models.Model):
 
     class Meta:
         verbose_name_plural = 'products'
+        ordering = ('name',)
+        index_together = (('id', 'slug'), )
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[self.slug])
 
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Product'
-        verbose_name_plural = 'Products'
-        index_together = (('id', 'slug'), )
-
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return reverse('product_detail', args=[self.id, self.slug])
 
 
 class ShoppingCart(models.Model):
@@ -92,7 +84,7 @@ class ShoppingCart(models.Model):
     created_timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Basket for {self.user.name}  and product : {self.product.name}'
+        return f'Basket for {self.user.username} and product: {self.product.name}'
 
 
 class Order(models.Model):
@@ -103,7 +95,7 @@ class Order(models.Model):
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.total_cost
+        return str(self.total_cost)
 
 
 class PaymentDetail(models.Model):
