@@ -30,5 +30,17 @@ class CustomerProfileUpdateForm(forms.ModelForm):
 class UserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username','email','password1','password2']
+        fields = ['username', 'email', 'password1', 'password2']
 
+
+PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 30)]
+
+
+class ShoppingCartAddProductForm(forms.Form):
+    quantity = forms.TypedChoiceField(
+                                choices=PRODUCT_QUANTITY_CHOICES,
+                                coerce=int)
+    update = forms.BooleanField(required=False,
+                                initial=False,
+                                widget=forms.HiddenInput
+                                )
