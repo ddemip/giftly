@@ -138,7 +138,6 @@ def cart_detail(request):
     return render(request, 'cart/detail.html', {'cart': cart})
 
 
-
 def product_list(request, category_slug=None):
     category = None
     categories = Category.objects.all()
