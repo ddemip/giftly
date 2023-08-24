@@ -2,11 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Customer, ShoppingCart, Product
+from django.views.decorators.http import require_POST
+from .models import ShoppingCart, Product, Category
 from .forms import UserProfileUpdateForm, CustomerProfileUpdateForm, UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
+from .shopping_cart import ShoppingCart
+from .forms import ShoppingCartAddProductForm
 
 
 def register(request):
@@ -63,30 +66,13 @@ def product_detail_view(request, slug):
     return render(request, 'product_detail.html', context)
 
 
-def cart_view(request):
-    customer = None
-
-    if request.user.is_authenticated:
-        try:
-            customer = Customer.objects.get(user=request.user)
-        except Customer.DoesNotExist:
-            pass
-
-    cart_items = []
-    if customer:
-        cart_items = ShoppingCart.objects.filter(customer=customer)
-
-    context = {
-        'cart_items': cart_items
-    }
-
-    return render(request, 'shopping_cart.html', context)
-
-
 class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
     template_name = 'profile.html'
     context_object_name = 'user'
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 @login_required
@@ -124,10 +110,44 @@ def update_profile(request):
     return render(request, 'update_profile.html', context)
 
 
-class UserProfileView(LoginRequiredMixin, DetailView):
-    model = User
-    template_name = 'profile.html'
-    context_object_name = 'user'
+@require_POST
+def cart_add(request, product_id):
+    products = Product.objects.all()
+    cart = ShoppingCart(request)
+    product = get_object_or_404(products, id=product_id)
+    form = ShoppingCartAddProductForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        cart.add(product=product,
+                 quantity=cd['quantity'],
+                 update_quantity=cd['update'])
+    return redirect('cart_detail')
 
-    def get_object(self, queryset=None):
-        return self.request.user
+
+def cart_remove(request, product_id):
+    cart = ShoppingCart(request)
+    product = get_object_or_404(Product, id=product_id)
+    cart.remove(product)
+    return redirect('cart_detail')
+
+
+def cart_detail(request):
+    cart = ShoppingCart(request)
+    for item in cart:
+        item['update_quantity_form'] = ShoppingCartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
+    return render(request, 'cart/detail.html', {'cart': cart})
+
+
+def product_list(request, category_slug=None):
+    category = None
+    categories = Category.objects.all()
+    products = Product.objects.filter()
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        products = products.filter(category=category)
+    return render(request, 'all_products.html',
+                  {
+                      'category': category,
+                      'categories': categories,
+                      'products': products
+                  })

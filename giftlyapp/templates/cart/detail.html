@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Корзина покупок
+{% endblock %}
+
+{% block content %}
+  <h1>Cart</h1>
+  <table class="shoppingcart">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Update qty</th>
+        <th>Delete</th>
+        <th>Qty</th>
+        <th>Price per unit</th>
+        <th>Total price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+        {% with product=item.product %}
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>
+              <form action="{% url 'cart_add' product.id %}" method="post">
+                {{ item.update_quantity_form.quantity }}
+                {{ item.update_quantity_form.update }}
+                <input type="submit" value="Update">
+                {% csrf_token %}
+              </form>
+            </td>
+            <td><a href="{% url 'cart_remove' product.id %}">Delete</a></td>
+            <td>
+              {{ item.quantity }}
+            </td>
+            <td class="num">${{ item.price }}</td>
+            <td class="num">${{ item.total_price }}</td>
+          </tr>
+        {% endwith %}
+      {% endfor %}
+      <tr class="total">
+        <td>Total</td>
+        <td colspan="4"></td>
+        <td class="num">${{ cart.get_total_price }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="text-right">
+    <a href="{% url 'product_list' %}" class="button light">Back to the shop</a>
+    <a href="#" class="button">Make an order</a>
+  </p>
+{% endblock %}
