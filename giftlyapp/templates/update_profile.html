@@ -3,6 +3,7 @@
 
 {% block content %}
 <main class="content">
+    <div class="user-profile">
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
@@ -35,5 +36,6 @@
                                     </div>
         <button type="submit">Update Profile</button>
     </form>
+    </div>
 </main>
 {% endblock %}

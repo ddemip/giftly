@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from .shopping_cart import ShoppingCart
 from .forms import ShoppingCartAddProductForm
 from django.core.paginator import Paginator
+from random import sample
 
 
 def register(request):
@@ -51,7 +52,17 @@ def user_logout(request):
 
 
 def home(request):
-    return render(request, "home.html")
+
+    all_products = Product.objects.all()
+
+    num_random_products = 6
+    random_products = sample(list(all_products), num_random_products)
+
+    context = {
+        'random_products': random_products,
+    }
+
+    return render(request, 'home.html', context)
 
 
 """
@@ -112,7 +123,6 @@ def update_profile(request):
 
     context = {'form': form}
     return render(request, 'update_profile.html', context)
-
 
 
 @require_POST

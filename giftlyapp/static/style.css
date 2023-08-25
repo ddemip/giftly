@@ -9,7 +9,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100vh; /* Set minimum height of the wrapper to 100% of the viewport height */
 }
 
 .header {
@@ -84,7 +84,7 @@
 }
 
 .btn-cart {
-    background-color: #2196F3; /* Button color */
+    background-color: whitesmoke; /* Button color */
     color: white;
     text-decoration: none;
     padding: 0; /* Remove padding */
@@ -133,9 +133,8 @@
 .sidebar {
     background-color: #8BC34A;
     width: 200px;
-    position: absolute; /* test if it should be fixed */
-    top: 100px;
-    bottom: 0;
+    position: absolute;
+    top: 150px;
     padding: 10px;
     left: 0;
 }
@@ -174,14 +173,14 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Create 3 equal columns */
     gap: 20px; /* Add gap between columns and rows */
-    margin: 20px;
     padding: 20px;
     background-color: #f9f9f9;
     overflow: hidden; /* Clear the float and establish block formatting context */
-    left: 220px;
-    top: 60px;
-    width: 85%; /* Take up full viewport width */
-    height: 100%; /* Occupy available vertical space */
+    margin-top: 50px;
+    margin-left: 250px;
+    margin-bottom: 50px;
+    width: 85%;
+    height: 100%;
 }
 
 .product {
@@ -189,7 +188,7 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    border: 1px solid #ddd;
+    border: 5px solid #ddd;
     background-color: white;
     width: 100%; /* Take full width of the grid column */
 }
@@ -216,35 +215,30 @@
     border-radius: 5px;
 }
 
+.product a.btn:hover {
+    background-color: #1E88E5; /* Darker color on hover */
+}
 
 .content {
     flex-grow: 1;
-    margin-left: 200px;
     margin-top: 50px;
     background-color: whitesmoke;
 }
 
-/* Additional styling for the sticky footer if needed */
 .footer {
     background-color: #333;
     color: white;
     padding: 20px 0;
     text-align: center;
-    position: absolute;
-    bottom: 0;
     width: 100%;
-}
-
-/* Add a margin to the bottom of the main content to create space above the footer */
-#main {
-    margin-bottom: 50px; /* Adjust the value as needed */
+    margin-top: auto;
 }
 
 /* Media query for small screens */
 @media (max-width: 768px) {
     .header-content {
         margin-left: 0;
-        text-align: center; /* Center align header content on smaller screens */
+        text-align: center;
     }
 
     .header-buttons {
@@ -284,4 +278,63 @@
     width: 300px;
     height: 300px;
     object-fit: cover; /* Maintain aspect ratio while covering the entire space */
+}
+
+.user-profile {
+    margin-left: 250px;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    overflow: hidden;
+    width: 50%;
+    height: 50%;
+}
+
+.user-profile h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.user-profile p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+}
+
+.user-profile a {
+    color: #2196F3;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.user-profile a:hover {
+    color: #1E88E5;
+}
+
+.profile-button {
+    margin-left: 250px;
+    margin-top: 10px;
+}
+
+.explore-button {
+    align-content: center;
+    margin-left: 700px;
+    margin-bottom: 50px;
+}
+
+.explore-button a {
+    font-size: 20px;
+    color: #2196F3;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.explore-button a:hover {
+    color: #1E88E5;
+}
+
+.product-detail {
+    margin-left: 250px;
+    margin-top: 50px;
 }
