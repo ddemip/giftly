@@ -4,22 +4,25 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 
 
+def generate_unique_slug(model, field_name, value, max_length=255):
+    orig_slug = slugify(value)[:max_length]
+    unique_slug = orig_slug
+    counter = 1
+
+    while model.objects.filter(**{field_name: unique_slug}).exists():
+        unique_slug = f"{orig_slug}-{counter}"
+        counter += 1
+
+    return unique_slug
+
+
 class Category(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            orig_slug = slugify(self.name)
-            unique_slug = orig_slug
-            counter = 1
-
-            while Category.objects.filter(slug=unique_slug).exists():
-                unique_slug = '{}-{}'.format(orig_slug, counter)
-                counter += 1
-
-            self.slug = unique_slug
-
+            self.slug = generate_unique_slug(Category, 'slug', self.name)
         super(Category, self).save(*args, **kwargs)
 
     class Meta:
@@ -30,8 +33,8 @@ class Category(models.Model):
 
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-    session_uuid = models.CharField(max_length=255)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    session_uuid = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.session_uuid
@@ -42,24 +45,15 @@ class Customer(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, blank=True, null=True)
-    name = models.CharField(max_length=255, db_index=True)
-    slug = models.SlugField(max_length=150, db_index=True, unique=True)
+    name = models.CharField(max_length=255, db_index=True, blank=True, null=True)
+    slug = models.SlugField(max_length=150, db_index=True, unique=True, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
-    thumbnail = models.ImageField(upload_to='products/')
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    thumbnail = models.ImageField(upload_to='products/', blank=True, null=True)
+    price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            orig_slug = slugify(self.name)
-            unique_slug = orig_slug
-            counter = 1
-
-            while Product.objects.filter(slug=unique_slug).exists():
-                unique_slug = '{}-{}'.format(orig_slug, counter)
-                counter += 1
-
-            self.slug = unique_slug
-
+            self.slug = generate_unique_slug(Product, 'slug', self.name, max_length=150)
         super(Product, self).save(*args, **kwargs)
 
     class Meta:
@@ -75,30 +69,30 @@ class Product(models.Model):
 
 
 class ShoppingCart(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
-    product_quantity = models.PositiveSmallIntegerField(default=0)
-    created_timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
+    product_quantity = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    created_timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
         return f'Basket for {self.user.username} and product: {self.product.name}'
 
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    basket_id = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE)
-    recipient_email = models.CharField(max_length=255)
-    total_cost = models.DecimalField(max_digits=7, decimal_places=2)
-    date = models.DateTimeField(auto_now=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
+    basket_id = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE, blank=True, null=True)
+    recipient_email = models.CharField(max_length=255, blank=True, null=True)
+    total_cost = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
+    date = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
         return str(self.total_cost)
 
 
 class PaymentDetail(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    payment_method = models.CharField(max_length=64)
-    status = models.CharField(max_length=10)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True)
+    payment_method = models.CharField(max_length=64, blank=True, null=True)
+    status = models.CharField(max_length=10, blank=True, null=True)
 
     def __str__(self):
         return self.status
