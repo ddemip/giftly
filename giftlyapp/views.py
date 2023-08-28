@@ -56,24 +56,17 @@ def password_change(request):
 
 
 def home(request):
-    all_products = Product.objects.all()
 
-    num_random_products = 0
-    random_products = sample(list(all_products), num_random_products)
+    all_products_list = Product.objects.all()
+
+    num_random_products = 6
+    random_products = sample(list(all_products_list), num_random_products)
 
     context = {
         'random_products': random_products,
     }
 
     return render(request, 'home.html', context)
-
-
-"""
-def all_products(request):
-    products = Product.objects.all()
-    context = {'products': products}
-    return render(request, 'all_products.html', context)
-"""
 
 
 def product_detail_view(request, slug):
@@ -135,10 +128,10 @@ def cart_add(request, product_id):
     product = get_object_or_404(products, id=product_id)
     form = ShoppingCartAddProductForm(request.POST)
     if form.is_valid():
-        cd = form.cleaned_data
+        clean_data = form.cleaned_data
         cart.add(product=product,
-                 quantity=cd['quantity'],
-                 update_quantity=cd['update'])
+                 quantity=clean_data['quantity'],
+                 update_quantity=clean_data['update'])
     return redirect('cart_detail')
 
 
