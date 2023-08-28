@@ -51,6 +51,10 @@ def user_logout(request):
     return redirect("home")
 
 
+def password_change(request):
+    return render(request, 'registration/pwd-reset.html')
+
+
 def home(request):
 
     all_products_list = Product.objects.all()
@@ -63,14 +67,6 @@ def home(request):
     }
 
     return render(request, 'home.html', context)
-
-
-"""
-def all_products(request):
-    products = Product.objects.all()
-    context = {'products': products}
-    return render(request, 'all_products.html', context)
-"""
 
 
 def product_detail_view(request, slug):
