@@ -31,6 +31,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('category_products', args=[self.slug])
+
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
@@ -62,7 +65,7 @@ class Product(models.Model):
         index_together = (('id', 'slug'), )
 
     def get_absolute_url(self):
-        return reverse('product_detail', args=[self.slug])
+        return reverse('product_detail_by_category', args=[self.category.slug, self.slug])
 
     def __str__(self):
         return self.name
