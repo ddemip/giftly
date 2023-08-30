@@ -70,6 +70,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'giftlyapp.context_processors.cart',
+                'giftlyapp.context_processors.categories',
 
             ],
         },

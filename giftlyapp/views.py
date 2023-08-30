@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -69,11 +70,17 @@ def home(request):
     return render(request, 'home.html', context)
 
 
-def product_detail_view(request, slug):
-    products = Product.objects.all()
-    product = get_object_or_404(Product, slug=slug)
+def product_detail_view(request, product_slug, category_slug=None):
+    product = get_object_or_404(Product, slug=product_slug)
+
+    # This checks if the product belongs to the given category, if specified.
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        if product.category != category:
+            raise Http404()
+
     cart_product_form = ShoppingCartAddProductForm()
-    context = {'products': products, 'product': product, 'cart_product_form': cart_product_form}
+    context = {'product': product, 'cart_product_form': cart_product_form}
     return render(request, 'product_detail.html', context)
 
 
