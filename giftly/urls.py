@@ -7,7 +7,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('<int:id>/<slug:slug>', views.product_detail_view, name='product_detail'),
     path('products/', views.all_products, name='all_products'),
     path('admin/', admin.site.urls),
     path('register/', views.register, name='register'),
@@ -17,20 +16,17 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(), name='login_1'),
     path('profile/', views.UserProfileView.as_view(), name='profile'),
     path('profile/<int:pk>/', views.UserProfileView.as_view(), name='profile'),
-    path('products/<slug:slug>/', views.product_detail_view, name='product_detail'),
     path('password_change/', views.password_change, name='pwd-reset'),
-
-    # path('categories/', views.category_list, name='category_list'),
-
     path('cart/', views.cart_detail, name='cart_detail'),
     path('add/<int:product_id>/', views.cart_add, name='cart_add'),
     path('remove/<int:product_id>/',
          views.cart_remove,
          name='cart_remove'),
+    path('<slug:category_slug>/', views.all_products, name='category_products'),
+    path('<slug:category_slug>/<slug:product_slug>/', views.product_detail_view, name='product_detail_by_category'),
+    path('search/', views.search_view, name='search'),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="sidebar">
-            <form class="search-form">
+            <form class="search-form" action="{% url 'search' %}" method="get">
                 <button type="submit" class="btn btn-search">Search</button>
                 <label for="category-location">Location:</label>
                 <select id="category-location" name="location">

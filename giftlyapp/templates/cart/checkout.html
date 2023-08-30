@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+  <div class="checkout-form">
+  <style>
+  .checkout-form {
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 250px;
+    margin-top: 50px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+    <h1>Checkout</h1>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="{{ form.recipient_name.id_for_label }}">Recipient Name:</label>
+        {{ form.recipient_name }}
+      </div>
+      <div class="form-group">
+        <label for="{{ form.recipient_email.id_for_label }}">Recipient Email:</label>
+        {{ form.recipient_email }}
+      </div>
+      <div class="form-group">
+        <label for="{{ form.payment_method.id_for_label }}">Payment Method:</label>
+        {{ form.payment_method }}
+      </div>
+      <div class="form-group">
+        <label for="{{ form.total_amount.id_for_label }}">Total Amount:</label>
+        {{ form.total_amount.value|floatformat:2 }}
+      </div>
+      <button class="btn btn-primary" type="button" onclick="location.href='{% url 'order_confirmation' 1 %}'">Place Order</button>
+
+    </form>
+  </div>
+{% endblock %}

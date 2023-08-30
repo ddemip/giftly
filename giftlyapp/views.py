@@ -3,8 +3,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from .models import ShoppingCart, Product, Category
-from .forms import UserProfileUpdateForm, CustomerProfileUpdateForm, UserCreationForm
+from .models import ShoppingCart, Product, Category, Order, OrderedItem
+from .forms import UserProfileUpdateForm, CustomerProfileUpdateForm, UserCreationForm, CheckoutForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
@@ -170,8 +170,57 @@ def all_products(request, category_slug=None):
     })
 
 
-""""""""""
-def category_list(request):
-    categories = Category.objects.all()
-    return render(request, 'category_list.html', {'categories': categories})
-"""""""""
+def checkout(request):
+    cart = ShoppingCart(request)
+    total_price = cart.get_total_price()
+    order = None
+
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.total_amount = total_price
+            order.save()
+
+            for item in cart:
+                product = item.product
+                product.purchase_count += item.quantity
+                product.save()
+
+                # Create OrderedItem instances
+            for item in cart:
+                ordered_item = OrderedItem.objects.create(order=order, product=item.product, quantity=item.quantity)
+                print(f"OrderedItem created: {ordered_item}")
+
+            return redirect('order_confirmation', order_id=order.id)
+    else:
+        form = CheckoutForm(initial={'total_amount': total_price})
+
+    context = {'form': form, 'order': order}
+    return render(request, 'cart/checkout.html', context)
+
+
+def order_confirmation(request, order_id):
+    new_order = Order.objects.create(customer=request.user.customer)
+    new_order_id = new_order.id
+    return redirect('order_confirmation', order_id=new_order_id)
+
+
+def category_detail(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    products = Product.objects.filter(category=category)
+    return render(request, 'category_detail.html', {'category': category, 'products': products})
+
+
+def search_view(request):
+    if request.method == 'GET':
+        location = request.GET.get('location')
+        activity_type = request.GET.get('activity_type')
+
+        # Query products based on selected location and activity type
+        products = Product.objects.filter(location=location, activity_type=activity_type)
+
+        context = {
+            'products': products
+        }
+        return render(request, 'search.html', context)

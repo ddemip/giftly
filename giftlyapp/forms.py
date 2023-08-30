@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Customer
+from .models import Customer, Order
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -44,3 +44,19 @@ class ShoppingCartAddProductForm(forms.Form):
                                 initial=False,
                                 widget=forms.HiddenInput
                                 )
+
+
+class CheckoutForm(forms.ModelForm):
+    total_amount = forms.DecimalField(disabled=True)
+    PAYMENT_CHOICES = [
+        ('credit_card', 'Credit Card'),
+        ('paypal', 'PayPal'),
+        ('google_pay', 'Google Pay'),
+        # Add more payment options here
+    ]
+
+    payment_method = forms.ChoiceField(choices=PAYMENT_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Order
+        fields = ['recipient_name', 'recipient_email', 'payment_method', 'total_amount']

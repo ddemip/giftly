@@ -19,6 +19,7 @@ def generate_unique_slug(model, field_name, value, max_length=255):
 class Category(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -49,7 +50,8 @@ class Product(models.Model):
     slug = models.SlugField(max_length=150, db_index=True, unique=True, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
     thumbnail = models.ImageField(upload_to='products/', blank=True, null=True)
-    price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    price = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
+    purchase_count = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -69,7 +71,7 @@ class Product(models.Model):
 
 
 class ShoppingCart(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
     product_quantity = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
     created_timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
@@ -81,12 +83,16 @@ class ShoppingCart(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
     basket_id = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE, blank=True, null=True)
-    recipient_email = models.CharField(max_length=255, blank=True, null=True)
+    recipient_name = models.CharField(max_length=255, blank=True, null=True)
+    recipient_email = models.EmailField(max_length=255, blank=True, null=True)
+    payment_method = models.CharField(max_length=64, blank=True, null=True)
     total_cost = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
     date = models.DateTimeField(auto_now=True, blank=True, null=True)
 
+    is_confirmed = models.BooleanField(default=False)
+
     def __str__(self):
-        return str(self.total_cost)
+        return f"Order {self.id}, Confirmed: {self.is_confirmed}"
 
 
 class PaymentDetail(models.Model):
@@ -96,3 +102,12 @@ class PaymentDetail(models.Model):
 
     def __str__(self):
         return self.status
+
+
+class OrderedItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"Order {self.order.id}: {self.product.name} x{self.quantity}"
