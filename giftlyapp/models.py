@@ -19,6 +19,9 @@ def generate_unique_slug(model, field_name, value, max_length=255):
 class Category(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
+    parent = models.ForeignKey(
+        'self', null=True, blank=True, related_name='children', on_delete=models.CASCADE
+    )
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -47,7 +50,9 @@ class Customer(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, blank=True, null=True)
+    category = models.ForeignKey(
+        Category, related_name='products', on_delete=models.CASCADE, blank=True, null=True
+    )
     name = models.CharField(max_length=255, db_index=True, blank=True, null=True)
     slug = models.SlugField(max_length=150, db_index=True, unique=True, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
@@ -83,7 +88,9 @@ class ShoppingCart(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
-    basket_id = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE, blank=True, null=True)
+    basket_id = models.ForeignKey(
+        ShoppingCart, on_delete=models.CASCADE, blank=True, null=True
+    )
     recipient_email = models.CharField(max_length=255, blank=True, null=True)
     total_cost = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
     date = models.DateTimeField(auto_now=True, blank=True, null=True)

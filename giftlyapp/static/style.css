@@ -5,16 +5,22 @@
     box-sizing: border-box;
 }
 
-/* Set up a flex container with column layout */
+.parent {
+    display: flex;
+    justify-content: center;
+}
+
 .wrapper {
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Set minimum height of the wrapper to 100% of the viewport height */
+    align-items: center; /* center children horizontally */
+    width: 100%;
 }
 
 .header {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #ffffff;
+    color: #000000;
     text-align: center;
     padding: 1em;
     display: flex;
@@ -24,22 +30,13 @@
 }
 
 .header-content {
-    text-align: center;
-    height: 100%; /* Take full height of header */
+    flex-grow: 1; /* It will take up the available space, pushing adjacent elements away */
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 450px;
-}
-
-.header h1 {
-    margin-bottom: 0.4em;
-    text-align: center;
 }
 
 .header p {
-
     text-align: center;
 }
 
@@ -50,84 +47,79 @@
 
 .header a.btn {
     color: white;
-    background-color: #2196F3;
+    background-color: #008080;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
     margin-left: 1em;
 }
 
-.languages {
-    display: flex;
-    margin-left: 1em; /* Adjust margin */
-}
-
-.language {
-    color: white;
-    margin-right: 0.5em;
-    cursor: pointer;
-}
-
 .header-bar {
-    background-color: khaki;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
     height: 50px;
     width: 100%;
-    position: absolute;
-    top: 100px;
-}
-
-.cart-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 15px;
-    display: flex;
-    align-items: center;
-}
-
-.btn-cart {
-    background-color: whitesmoke; /* Button color */
-    color: white;
-    text-decoration: none;
-    padding: 0; /* Remove padding */
-    width: 40px; /* Set width to 40px */
-    height: 30px; /* Set height to 30px */
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1; /* Set line-height to 1 to center the text vertically */
-    text-align: center; /* Center the text horizontally */
-}
-
-.btn-cart i {
-    margin-right: 5px;
-}
-
-.btn-cart:hover {
-    background-color: #1E88E5; /* Darker color on hover */
+    position: relative;
 }
 
 .header-buttons {
     display: flex;
     align-items: center;
+    justify-content: center;
     margin-top: 3px;
-    margin-left: 200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+
+.cart-button {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* This will push the cart button to the rightmost part of the flex container,
+                        keeping space between the buttons and cart. */
+}
+
+
 .btn-header {
-    background-color: #2196F3; /* Button color */
+    background-color: #008080;
     color: white;
     text-decoration: none;
-    padding: 10px 20px; /* Adjust padding */
+    padding: 10px 20px;
     border-radius: 5px;
-    margin-left: 40px; /* Add some spacing between buttons */
-    font-size: 20px; /* Adjust font size */
+    margin: 0 15px; /*top-bottom 0, left-right 15*/
+    font-size: 20px;
     transition: background-color 0.2s;
 }
 
 .btn-header:hover {
-    background-color: #1E88E5; /* Darker color on hover */
+    background-color: #004242;
+}
+
+.customer-links {
+    width: 100%;
+    text-align: end;
+}
+
+.profile-link {
+    margin-top: 10px;
+    margin-right: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.header-separator {
+    height: 100%;
+    border-left: black solid 1px;
+}
+
+.cart-link {
+    margin-top: 10px;
+    margin-left: 10px;
+    text-decoration: none;
+    color: black;
 }
 
 .cart-info {
@@ -151,58 +143,13 @@
     height: 20px;
 }
 
-/* Style for the sidebar */
-.sidebar {
-    background-color: #8BC34A;
-    width: 200px;
-    position: absolute;
-    top: 150px;
-    padding: 10px;
-    left: 0;
-}
-
-/* Style for the search form */
-.search-form label {
-    display: block;
-    margin-top: 5px;
-}
-
-.search-form select,
-.search-form button {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.btn-search {
-    background-color: #2196F3; /* Button color */
-    color: white;
-    text-decoration: none;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btn-search:hover {
-    background-color: #1E88E5; /* Darker color on hover */
-}
-
 /* Style for featured products */
 .featured-products {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Create 3 equal columns */
-    gap: 20px; /* Add gap between columns and rows */
-    padding: 20px;
-    background-color: #f9f9f9;
-    overflow: hidden; /* Clear the float and establish block formatting context */
-    margin-top: 50px;
-    margin-left: 250px;
-    margin-bottom: 50px;
-    width: 85%;
-    height: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 0 auto; /* centers the grid within its container */
+    width: fit-content; /* make grid only as wide as its content */
 }
 
 .product {
@@ -210,6 +157,7 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    margin-bottom: 10px;
     border: 5px solid #ddd;
     background-color: white;
     width: 100%; /* Take full width of the grid column */
@@ -231,20 +179,27 @@
 
 .product a.btn {
     color: white;
-    background-color: #2196F3;
+    background-color: #008080;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
 }
 
 .product a.btn:hover {
-    background-color: #1E88E5; /* Darker color on hover */
+    background-color: #004242;
 }
 
 .content {
     flex-grow: 1;
     margin-top: 50px;
-    background-color: whitesmoke;
+    width: 100%;
+}
+
+.weather-widget-container {
+    display: flex;
+    justify-content: center;  /* horizontally center */
+    align-items: center;      /* vertically center */
+    flex-direction: column;   /* stack vertically */
 }
 
 .footer {
@@ -256,51 +211,13 @@
     margin-top: auto;
 }
 
-/* Media query for small screens */
-@media (max-width: 768px) {
-    .header-content {
-        margin-left: 0;
-        text-align: center;
-    }
-
-    .header-buttons {
-        margin-left: 0;
-        justify-content: center; /* Center align header buttons on smaller screens */
-    }
-
-    .sidebar {
-        position: static;
-        width: 100%;
-        margin-top: 20px;
-        padding: 10px; /* Add padding to sidebar for breathing space on smaller screens */
-    }
-
-    .search-form select,
-    .search-form button {
-        padding: 10px; /* Increase padding for select and button on smaller screens */
-    }
-
-    .featured-products {
-        margin-left: 0;
-        width: 100%;
-    }
-
-    .product {
-        padding: 10px;
-    }
-
-    .content {
-        margin-left: 0;
-        margin-top: 20px;
-    }
-}
-
 /* Set the width and height of product images */
 .item img {
     width: 300px;
     height: 300px;
     object-fit: cover; /* Maintain aspect ratio while covering the entire space */
 }
+
 
 .user-profile {
     margin-left: 250px;
@@ -325,7 +242,7 @@
 }
 
 .user-profile a {
-    color: #2196F3;
+    color: #008080;
     text-decoration: none;
     transition: color 0.2s;
 }
@@ -341,13 +258,17 @@
 
 .explore-button {
     align-content: center;
-    margin-left: 700px;
-    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;  /* horizontally center */
+    align-items: center;      /* vertically center */
+    flex-direction: column;   /* stack vertically */
+    margin-bottom: 40px;
+
 }
 
 .explore-button a {
     font-size: 20px;
-    color: #2196F3;
+    color: #000000;
     text-decoration: none;
     transition: color 0.2s;
 }
@@ -359,4 +280,170 @@
 .product-detail {
     margin-left: 250px;
     margin-top: 50px;
+}
+
+/*Otsingu css proov*/
+
+.search-container {
+    position: relative;
+    max-width: 300px;
+}
+
+.search-input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid black;  /* underline effect */
+    background-color: transparent;
+    padding: 10px 10px 10px 40px;    /* padding room for magnifying glass */
+    font-size: 16px;
+    outline: none;
+}
+
+.magnifying-glass {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/> </svg>');
+    background-repeat: no-repeat;
+    background-size: 20px;
+    cursor: pointer;
+}
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;  /* display on top of other content */
+    border: 1px solid #ccc;
+    border-radius: 5px; /* round corners */
+}
+
+/* Dropdown content links */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Positioning for parent categories with child items */
+.parent-category {
+    position: relative;
+}
+
+/* Styles for child categories */
+.child-categories {
+    top: 0;
+    left: 100%; /* this makes it display to the right of the parent */
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+}
+
+/* Show child categories on hover over a parent */
+.parent-category:hover .child-categories {
+    display: block;
+}
+
+/* Media Query for Mobile view */
+@media (max-width: 768px) {
+    .header-bar {
+        flex-direction: column;
+        height: auto;  /* Allow the height to adjust based on content */
+        padding: 10px 0; /* Add some vertical padding */
+    }
+
+    .header-buttons, .cart-button {
+        margin-top: 10px;  /* Space between the elements */
+    }
+
+    .search-container {
+        margin-bottom: 10px; /* Space after the search bar */
+        width: 100%;  /* Make search bar full width */
+    }
+
+    .search-container .search-input {
+        width: 90%; /* Adjust width to take up more space within the container */
+    }
+
+    .header-buttons {
+        flex-wrap: wrap; /* Allow wrapping of buttons so they stack */
+        justify-content: space-between; /* Distribute the space between buttons */
+    }
+
+    .header-buttons .btn-header {
+        flex: 1 1 auto; /* Allow buttons to grow and shrink as needed */
+        display: block;  /* Making buttons full width */
+        width: 100%;
+        margin: 5px;  /* Small margin for space between stacked buttons */
+        text-align: left;  /* Align text to the left */
+    }
+
+    .dropdown {
+        margin-right: 10px;
+        width: 100%;  /* Making dropdown full width */
+    }
+
+    .dropdown-content {
+        display: none;  /* Initially hide dropdown content */
+        width: 100%;  /* Make dropdown content full width */
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;  /* Show dropdown content on hover */
+    }
+
+    .parent-category {
+        width: 100%;  /* Making parent-category full width */
+    }
+
+    .child-categories {
+        left: 50%;
+        width: 50%;
+    }
+
+    .child-categories a {
+        display: block;  /* Making child links stack vertically */
+        margin-left: 15px;  /* Indent child links for hierarchy */
+    }
+
+    .cart-button {
+        margin-left: unset;
+    }
+
+    .featured-products {
+        grid-template-columns: 1fr; /* Create a single column */
+        margin-left: 0; /* Remove the left margin to give more space on mobile */
+        width: 100%; /* Use full width */
+    }
 }

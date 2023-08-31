@@ -2,25 +2,25 @@
 {% load static %}
 
 {% block content %}
-<main class="content">
-    <div class="featured-products">
-        <div class="row">
-            {% for product in random_products %}
-            <div class="product">
-                <a href="{{ product.get_absolute_url }}">
-                    <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="No Image" style="width: 200px; height: 200px;">
-                </a>
-                <h3>{{ product.name }}</h3>
-                <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Details</a>
-            </div>
-            {% if forloop.counter|divisibleby:3 and not forloop.last %}
-                </div><div class="row"> <!-- Start a new row after every 3 products -->
-            {% endif %}
-            {% endfor %}
+
+<div class="featured-products">
+    <div class="row">
+        {% for product in random_products %}
+        <div class="product">
+            <a href="{{ product.get_absolute_url }}">
+                <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="No Image" style="width: 200px; height: 200px;">
+            </a>
+            <h3>{{ product.name }}</h3>
+            <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Details</a>
         </div>
+        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+            </div><div class="row"> <!-- Start a new row after every 3 products -->
+        {% endif %}
+        {% endfor %}
     </div>
-    <div class="explore-button">
-        <a href="{% url 'all_products' %}" class="btn btn-primary d-block mx-auto">Explore All Products</a>
-    </div>
-</main>
+</div>
+<div class="explore-button">
+    <a href="{% url 'all_products' %}" class="btn btn-primary d-block mx-auto">Vaata rohkem tooteid</a>
+</div>
+
 {% endblock %}
