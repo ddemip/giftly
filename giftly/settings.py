@@ -38,6 +38,7 @@ CART_SESSION_ID = 'cart'
 
 INSTALLED_APPS = [
     'giftlyapp',
+    'weather_widget',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

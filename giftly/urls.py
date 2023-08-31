@@ -4,9 +4,11 @@ from django.contrib.auth import views as auth_views
 import giftlyapp.views as views
 from django.contrib.staticfiles.urls import static
 from django.conf import settings
+from weather_widget import views as weather_views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('weather_widget/fetch_weather/', weather_views.fetch_weather, name='fetch_weather'),
     path('products/', views.all_products, name='all_products'),
     path('admin/', admin.site.urls),
     path('register/', views.register, name='register'),

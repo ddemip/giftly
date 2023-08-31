@@ -5,84 +5,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Giftly!</title>
+    <title>Giftly</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
+<div class="parent">
     <div class="wrapper">
         <header class="header">
             <div class="header-content">
-                <h1>Welcome to Giftly!</h1>
-                <p>Your destination for exciting activities and experiences in Estonia.</p>
-            </div>
-            <div class="header-actions">
-                <span id="hello-msg" >Hello: {{request.user}}</span>
-                <ul class="nav">
-                    <li class="nav-item text-white">
-                        {% if request.user.is_authenticated %}
-                        <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
-                        {% else %}
-                        <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
-                        {% endif %}
-                    </li>
-                </ul>
-                <div class="languages">
-                    <span class="language">EN</span>
-                    <span class="language">EE</span>
-                </div>
+                <a href="{% url 'home' %}">
+                    <img src="{% get_media_prefix %}visual/GIFTLY.png" alt="Logo" style="width: 400px; height: 150px;">
+                </a>
             </div>
         </header>
         <div class="header-bar">
-            <div class="header-buttons">
-                <a href="{% url 'home' %}" class="btn-header">Home</a>
-                <a href="#" class="btn-header">Best Sellers</a>
-                <a href="#" class="btn-header">Deals/Featured</a>
-                <a href="{% url 'all_products' %}" class="btn-header">All Products</a>
-                <a href="{% url 'profile' %}" class="btn-header">Account</a>
+            <div class="search-container">
+                <div class="magnifying-glass"></div>
+                <input class="search-input" type="text" placeholder="Otsi...">
             </div>
-            <div class="cart-button">
-                <div class="cart-info">
-                    {% with total_items=cart|length %}
-                    {% if cart|length > 0  %}
-                    {{ total_items }} items ${{ cart.get_total_price }}
-                    {% else %}
-                    Cart is empty
-                    {% endif %}
-                    {% endwith %}
+            <div class="header-buttons">
+                <div class="dropdown">
+                    <a href="{% url 'all_products' %}" class="btn-header">Tooted</a>
+                    <div class="dropdown-content">
+                        {% for category in categories %}
+                            {% if not category.parent %}
+                                <div class="parent-category">
+                                    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                                    <div class="child-categories">
+                                        {% for child in category.children.all %}
+                                            <a href="{{ child.get_absolute_url }}">{{ child.name }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
-                <a href="{% url 'cart_detail' %}" class="btn btn-cart">
-                    <div class="cart-icon">
-                        <img src="{% get_media_prefix %}visual/shoppingcart.webp" alt="Cart" style="width: 20px; height: 20px;">
+                <a href="#" class="btn-header">Populaarsed</a>
+                <a href="#" class="btn-header">Info</a>
+                <a href="#" class="btn-header">KKK</a>
+            </div>
+            <div class="customer-links">
+                <a class="profile-link" href="{% url 'profile' %}">
+                    <img src="{% get_media_prefix %}visual/account.png" alt="Account" style="width: 20px; height: 20px;">
+                    <span id="hello-msg">{{ request.user }}</span>
+                </a>
+                <span class="header-separator"></span>
+                <a class="cart-link" href="{% url 'cart_detail' %}">
+                    <img src="{% get_media_prefix %}visual/shoppingcart.webp" alt="Cart"
+                         style="width: 20px; height: 20px;">
+                    <div class="cart-info">
+                        {% with total_items=cart|length %}
+                            {% if cart|length > 0 %}
+                                {{ cart.get_total_price }} €
+                            {% else %}
+                                Ostukorv
+                            {% endif %}
+                        {% endwith %}
                     </div>
                 </a>
             </div>
         </div>
-        <div class="sidebar">
-            <form class="search-form">
-                <button type="submit" class="btn btn-search">Search</button>
-                <label for="category-location">Location:</label>
-                <select id="category-location" name="location">
-                    <option value="tallinn">Tallinn</option>
-                    <option value="tartu">Tartu</option>
-                    <option value="parnu">Pärnu</option>
-                    <option value="parnu">Muu</option>
-                    <!-- Add more location options as needed -->
-                </select>
-                <label for="category-type">Activity Type:</label>
-                <select id="category-type" name="activity_type">
-                    <option value="adventure">Adventure</option>
-                    <option value="culture">Culture</option>
-                    <option value="food">Food</option>
-                    <!-- Add more activity type options as needed -->
-                </select>
-            </form>
-        </div>
+
         <main class="content">
             {% block content %}{% endblock %}
         </main>
+        <div class="weather-widget-container">
+            {% include "weather_widget/widget.html" %}
+        </div>
+    </div>
+</div>
         <footer class="footer">
             <p>&copy; 2023 Giftly. All rights reserved.</p>
         </footer>
-    </div>
 </body>
 </html>

@@ -6,7 +6,7 @@
 {% block content %}
 <main class="content">
     <div class="product-detail">
-        <img src="{{ product.thumbnail.url }}" alt="{{ product.title }}" width="200" height="200">
+        <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="{{ product.title }}" width="200" height="200">>
         <h3>{{ product.title }}</h3>
         <p>{{ product.description }}</p>
         <p>{{ product.price }}€</p>
