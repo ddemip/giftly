@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  Корзина покупок
+  Shopping Cart
 {% endblock %}
 
 {% block content %}
@@ -27,9 +27,8 @@
             <td>{{ product.name }}</td>
             <td>
               <form action="{% url 'cart_add' product.id %}" method="post">
-                {{ item.update_quantity_form.quantity }}
-                {{ item.update_quantity_form.update }}
-                <input type="submit" value="Update">
+                  <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                  <input type="submit" value="Update">
                 {% csrf_token %}
               </form>
             </td>
@@ -50,8 +49,8 @@
     </tbody>
   </table>
   <p class="text-right">
-    <a href="{% url 'all_products' %}" class="button light">Back to the shop</a>
-    <a href="#" class="button">Make an order</a>
+    <a href="{% url 'home' %}" class="button light">Back to the shop</a>
+    <a href="{% url 'checkout' %}" class="button">Make an order</a>
   </p>
  </div>
 </main>

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Search Results for "{{ query }}"
+{% endblock %}
+
+{% block content %}
+<div id="main" class="product-list">
+    <h1>Search Results for "{{ query }}"</h1>
+    {% if products %}
+        {% for product in products %}
+        <div class="item">
+            <a href="{{ product.get_absolute_url }}">
+                <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="">
+            </a>
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+            <br>
+            {{ product.price }}€
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Sorry, no matching products found.</p>
+    {% endif %}
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        <!-- Pagination links here -->
+    </span>
+</div>
+{% endblock %}

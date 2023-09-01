@@ -1,13 +1,16 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Customer
-from django.contrib.auth.forms import UserCreationForm
+from .models import Customer, PaymentDetail
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 
 
 class UserProfileUpdateForm(forms.ModelForm):
+    address = forms.CharField(max_length=255, required=False)
+    city = forms.CharField(max_length=255, required=False)
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name']
+        fields = ['first_name', 'last_name', 'address', 'city']
 
 
 class CustomerProfileUpdateForm(forms.ModelForm):
@@ -27,6 +30,11 @@ class CustomerProfileUpdateForm(forms.ModelForm):
         return customer
 
 
+class PasswordChangeCustomForm(PasswordChangeForm):
+    class Meta:
+        model = User
+
+
 class UserCreationForm(UserCreationForm):
     class Meta:
         model = User
@@ -44,3 +52,39 @@ class ShoppingCartAddProductForm(forms.Form):
                                 initial=False,
                                 widget=forms.HiddenInput
                                 )
+
+
+class CheckoutForm(forms.ModelForm):
+    class Meta:
+        model = PaymentDetail
+        fields = ['sender_name', 'sender_email', 'is_gift', 'gift_recipient_name', 'recipient_email', 'payment_method']
+
+    PAYMENT_METHOD_CHOICES = [
+        ('credit_card', 'Credit Card'),
+        ('paypal', 'PayPal'),
+        ('apple_pay', 'Apple Pay'),
+        ('google_pay', 'Google Pay'),
+        # Add more payment methods here
+    ]
+
+    payment_method = forms.ChoiceField(
+        choices=PAYMENT_METHOD_CHOICES,
+        widget=forms.RadioSelect
+    )
+
+    sender_name = forms.CharField(max_length=255, required=True)
+    sender_email = forms.EmailField(max_length=255, required=True)
+
+    is_gift = forms.BooleanField(initial=False, required=False)
+    gift_recipient_name = forms.CharField(max_length=255, required=False)
+    recipient_email = forms.EmailField(max_length=255, required=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        is_gift = cleaned_data.get('is_gift')
+        gift_recipient_name = cleaned_data.get('gift_recipient_name')
+
+        if is_gift and not gift_recipient_name:
+            self.add_error('gift_recipient_name', 'This field is required for gift orders.')
+
+        return cleaned_data

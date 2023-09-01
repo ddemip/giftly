@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Checkout
+{% endblock %}
+
+{% block content %}
+<main class="content">
+  <div class="checkout">
+    <h1>Checkout</h1>
+    <form method="post" action="{% url 'checkout' %}">
+      {% csrf_token %}
+
+      <h2>Sender Information</h2>
+      <label for="{{ form.sender_name.id_for_label }}">Your Name:</label>
+      {{ form.sender_name }}
+      <label for="{{ form.sender_email.id_for_label }}">Your Email:</label>
+      {{ form.sender_email }}
+
+      <h2>Recipient Information</h2>
+      <label for="{{ form.is_gift.id_for_label }}">Is this a gift?</label>
+      {{ form.is_gift }}
+      <div id="gift-fields" style="display: none;">
+        <label for="{{ form.gift_recipient_name.id_for_label }}">Gift Recipient Name:</label>
+        {{ form.gift_recipient_name }}
+      </div>
+      <div id="gift-recipient-fields" style="display: none;">
+        <label for="{{ form.recipient_email.id_for_label }}">Recipient Email:</label>
+        {{ form.recipient_email }}
+      </div>
+
+      <h2>Payment Method</h2>
+      <label for="{{ form.payment_method.id_for_label }}">Payment Method:</label>
+      {{ form.payment_method }}
+
+      <!-- Order Summary -->
+      <h2>Order Summary</h2>
+      <table class="order-summary">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart %}
+            <tr>
+              <td>{{ item.product.name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>${{ item.price }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p>Total: ${{ cart.get_total_price }}</p>
+
+      <!-- Submit Button -->
+      <button type="submit" class="button">Place Order</button>
+    </form>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const isGiftCheckbox = document.querySelector('#id_is_gift');
+        const giftFields = document.querySelector('#gift-fields');
+        const giftRecipientFields = document.querySelector('#gift-recipient-fields');
+
+        isGiftCheckbox.addEventListener('change', function() {
+          giftFields.style.display = this.checked ? 'block' : 'none';
+          giftRecipientFields.style.display = this.checked ? 'block' : 'none';
+        });
+      });
+    </script>
+    <link rel="stylesheet" type="text/css" href="{% static 'cart.css' %}">
+  </div>
+</main>
+{% endblock %}

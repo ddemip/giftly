@@ -9,7 +9,10 @@
             <p>First Name: {{ user.first_name }}</p>
             <p>Last Name: {{ user.last_name }}</p>
             <p>Email: {{ user.email }}</p>
-            <!-- Add more fields as needed -->
+
+            <!-- Display Address and City (Not saved in the database) -->
+            <p>City: {{ user_form.city.value }}</p>
+            <p>Address: {{ user_form.address.value }}</p>
         </div>
         <!-- Display messages -->
         {% if messages %}
@@ -22,6 +25,7 @@
 
         <div class="profile-button">
             <a href="{% url 'update_profile' %}" class="btn btn-search">Edit Profile</a>
+            <a href="{% url 'update_password' %}" class="btn btn-search">Update Password</a>
         </div>
     </main>
 {% endblock %}
