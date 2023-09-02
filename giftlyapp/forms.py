@@ -5,7 +5,6 @@ from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 
 
 class UserProfileUpdateForm(forms.ModelForm):
-
     class Meta:
         model = User
         fields = ['first_name', 'last_name']
@@ -44,8 +43,9 @@ PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 30)]
 
 class ShoppingCartAddProductForm(forms.Form):
     quantity = forms.TypedChoiceField(
-                                choices=PRODUCT_QUANTITY_CHOICES,
-                                coerce=int)
+        label="Kogus",
+        choices=PRODUCT_QUANTITY_CHOICES,
+        coerce=int)
     update = forms.BooleanField(required=False,
                                 initial=False,
                                 widget=forms.HiddenInput
@@ -91,6 +91,7 @@ class CheckoutForm(forms.ModelForm):
 
 class AddToCartForm(forms.Form):
     quantity = forms.IntegerField(
+        label="Kogus",
         min_value=1,
         initial=1,
         widget=forms.NumberInput(attrs={'class': 'quantity-input'}),

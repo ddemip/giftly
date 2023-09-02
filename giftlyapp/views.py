@@ -257,7 +257,13 @@ def order_confirmation(request, order_id):
 
     # Ensure that the user has permission to view this order (e.g., if they are logged in)
     if request.user.is_authenticated and (request.user == order.customer.user):
-        context = {'order': order}
+        # New list from items
+        shoppingcart_items = list(order.shoppingcartitem_set.all())
+        # Add the total price as an attribute to each item
+        for item in shoppingcart_items:
+            item.total_price = item.quantity * item.product.price
+
+        context = {'order': order, 'shoppingcart_items': shoppingcart_items}
         return render(request, 'cart/order_confirmation.html', context)
     else:
         # Handle unauthorized access to the order confirmation page

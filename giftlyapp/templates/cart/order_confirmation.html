@@ -2,43 +2,41 @@
 {% load static %}
 
 {% block title %}
-  Order Confirmation
+    Order Confirmation
 {% endblock %}
 
 {% block content %}
-<div class="order-confirmation-container">
-  <link rel="stylesheet" type="text/css" href="{% static 'cart.css' %}">
-  <div class="order-confirmation-box">
-    <h1>Teie tellimus on Kinnitatud</h1>
-    <p>Täname teid ostu eest! Informatioon tellimse kohta:</p>
+    <main class="content">
+        <div class="order-confirmation-container">
+            <link rel="stylesheet" type="text/css" href="{% static 'cart.css' %}">
+            <h1>Teie tellimus on kinnitatud</h1>
+            <p>Täname teid ostu eest! Informatioon tellimse kohta:</p>
 
-    <h2>Tellimuse number: {{ order.id }}</h2>
+            <h2>Tellimuse number: {{ order.id }}</h2>
 
-    <h3>Tooted:</h3>
-    <ul>
-      {% for item in order.shoppingcartitem_set.all %}
-        <li>{{ item.product.name }} ({{ item.quantity }})</li>
-      {% endfor %}
-    </ul>
-
-    <h3>Kokku: €{{ order.total_cost }}</h3>
-
-    <h3>Saatja informatioon:</h3>
-    <p>Nimi: {{ order.sender_name }}</p>
-    <p>Email: {{ order.sender_email }}</p>
-
-    <h3>Makseviis:</h3>
-    <p>Payment Method: {{ order.payment_method }}</p>
-
-    <!-- Recipient Information -->
-    <h3>Saaja informatsioon:</h3>
-    <p>Nimi: {{ order.gift_recipient_name }}</p>
-    <p>Email: {{ order.recipient_email }}</p>
-    {% if order.is_gift %}
-    {% endif %}
-
-    <p class="thank-you">Giftly meeskond tänab teid!</p>
-    <a href="{% url 'home' %}" class="detail-button">Tagasi pealehele</a>
-  </div>
-</div>
+            <h3>Tooted:</h3>
+            <ul>
+                {% for item in shoppingcart_items %}
+                    <li>{{ item.product.name }} ({{ item.quantity }}) / {{ item.total_price }}€</li>
+                {% endfor %}
+            </ul>
+            <br>
+            <h3>Kokku: €{{ order.total_cost }}</h3>
+            <br>
+            <h3>Kliendi informatioon:</h3>
+            <p>Nimi: {{ order.sender_name }}</p>
+            <p>Email: {{ order.sender_email }}</p>
+            <br>
+            <!-- Recipient Information -->
+            <h3>Saaja informatsioon:</h3>
+            <p>Nimi: {{ order.gift_recipient_name }}</p>
+            <p>Email: {{ order.recipient_email }}</p>
+            {% if order.is_gift %}
+            {% endif %}
+            <br>
+            <p class="thank-you">Giftly meeskond tänab teid!</p>
+            <br>
+            <a href="{% url 'home' %}" class="detail-button">Tagasi pealehele</a>
+        </div>
+    </main>
 {% endblock %}

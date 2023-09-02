@@ -6,23 +6,29 @@
 {% block content %}
 <main class="content">
     <div class="product-detail">
-        <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="{{ product.title }}" width="200" height="200">
-        <h3>{{ product.title }}</h3>
-        <p>{{ product.description }}</p>
-        <p>{{ product.price }}€</p>
+        <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="{{ product.title }}" width="300" height="300">
+
+        <div class="product-info">
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p>{{ product.price }}€</p>
+        </div>
 
         <!-- Add to basket form -->
-        <form action="{% url 'add_to_cart' product.id %}" method="POST">
-            {% csrf_token %}
-            {{ cart_product_form.quantity.label_tag }} {{ cart_product_form.quantity }}
-            <input type="submit" value="Add to basket">
-        </form>
+        <div class="add-to-basket">
+            <form action="{% url 'add_to_cart' product.id %}" method="POST">
+                {% csrf_token %}
+                {{ cart_product_form.quantity.label_tag }} {{ cart_product_form.quantity }}
+                <input type="submit" value="Lisa ostukorvi">
+            </form>
 
-        {% if product_added_to_cart %}
-            <div class="success-message">
-                Product added to the basket successfully!
-            </div>
-        {% endif %}
+            {% if product_added_to_cart %}
+                <div class="success-message">
+                    Toode on lisatud ostukorvi!
+                </div>
+            {% endif %}
+        </div>
     </div>
 </main>
+
 {% endblock %}
