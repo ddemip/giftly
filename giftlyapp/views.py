@@ -42,7 +42,7 @@ def user_login(request):
             login(request, user)
             return redirect("home")
         else:
-            messages.info(request, 'username OR password is incorrect')
+            messages.info(request, 'Kasutajanimi VÕI parool on vale')
     context = {}
     return render(request, 'registration/login.html', context)
 
@@ -278,3 +278,7 @@ def update_password(request):
 
     context = {'form': form}
     return render(request, 'update_password.html', context)
+
+def info(request):
+    return render(request, "info.html")
+
