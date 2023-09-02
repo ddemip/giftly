@@ -38,8 +38,8 @@
            </div>
           </td>
           <td><a href="{% url 'cart_remove' product.id %}" class="delete-button">Kustuta</a></td>
-          <td class="num">&euro;{{ item.price|floatformat:2 }}</td>
-          <td class="num">&euro;{{ item.total_price|floatformat:2 }}</td>
+            <td class="num">€{{ item.price }}</td>
+            <td class="num">€{{ item.total_price }}</td>
         </tr>
         {% endwith %}
         {% endfor %}

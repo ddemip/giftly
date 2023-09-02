@@ -6,50 +6,23 @@
 {% block content %}
 <main class="content">
     <div class="product-detail">
-        <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="{{ product.title }}" width="200" height="200">>
+        <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="{{ product.title }}" width="200" height="200">
         <h3>{{ product.title }}</h3>
         <p>{{ product.description }}</p>
         <p>{{ product.price }}€</p>
-        <button id="openPopup">View Details</button>
-        <form action="{% url 'cart_add' product.id %}" method="POST">
-            {{cart_product_form}}
+
+        <!-- Add to basket form -->
+        <form action="{% url 'add_to_cart' product.id %}" method="POST">
             {% csrf_token %}
-        <input type="submit" value="Add to basket">
+            {{ cart_product_form.quantity.label_tag }} {{ cart_product_form.quantity }}
+            <input type="submit" value="Add to basket">
         </form>
+
+        {% if product_added_to_cart %}
+            <div class="success-message">
+                Product added to the basket successfully!
+            </div>
+        {% endif %}
     </div>
 </main>
-{% endblock %}
-
-{% block popup %}
-<div class="popup-overlay">
-    <div class="popup-content">
-        <!-- Product details -->
-        <img src="{{ product.thumbnail.url }}" alt="{{ product.title }}" width="200" height="200">
-        <h3>{{ product.title }}</h3>
-        <p>{{ product.description }}</p>
-        <p>{{ product.price }}€</p>
-        <button>Add to Cart</button>
-
-        <!-- Close button -->
-        <button id="closePopup">Close</button>
-    </div>
-</div>
-
-<script>
-    // JavaScript to show/hide the popup
-    const popupOverlay = document.querySelector('.popup-overlay');
-    const openPopupBtn = document.getElementById('openPopup');
-    const closePopupBtn = document.getElementById('closePopup');
-
-    function openPopup() {
-        popupOverlay.style.display = 'flex';
-    }
-
-    function closePopup() {
-        popupOverlay.style.display = 'none';
-    }
-
-    openPopupBtn.addEventListener('click', openPopup);
-    closePopupBtn.addEventListener('click', closePopup);
-</script>
 {% endblock %}
