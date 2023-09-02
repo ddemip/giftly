@@ -1,29 +1,82 @@
 <style>
     .weather-widget {
+        display: none;
         border: 1px solid #ddd;
         padding: 16px;
         border-radius: 8px;
-        width: 200px;
+        justify-content: flex-end;
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
-        box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
         margin: 16px;
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%;
     }
     
     .weather-widget h2 {
         margin-top: 0;
         color: #333;
     }
-    
+
     .weather-widget p {
         margin: 8px 0;
         font-size: 14px;
         color: #666;
     }
-    
+
     .weather-widget .temperature {
         font-weight: bold;
         color: #444;
+    }
+
+    .weather-widget .weather-day {
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+
+    .weather-widget .weather-day:first-child {
+        border-top: none;
+        padding-top: 0;
+        margin-top: 0;
+    }
+
+    .weather-widget .forecast-container {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: nowrap; /* If you want them to stay in a single row and not wrap */
+        overflow-x: auto; /* Enable horizontal scrolling if they overflow */
+    }
+
+    .forecast-entry {
+        background-color: #dcdcdc;
+        border: 1px solid #ddd;
+        padding: 8px;
+        box-sizing: border-box;
+        margin: 4px;
+        border-radius: 5px;
+        flex: 0 0 auto; /* this makes sure the width isn't forcibly shrunk and maintains the content's width */
+    }
+
+    .forecast-entry .day-time-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    .forecast-entry img {
+        width: 30px;
+        margin-left: 5px;
+    }
+
+    .day-time-row span:not(:last-child) {
+        padding-right: 5px; /* adds padding between time and temperature */
+    }
+
+    #weather-form {
+        margin-bottom: 40px;
     }
 </style>
 
@@ -38,34 +91,69 @@
     <!-- Weather data will appear here -->
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
-$(document).ready(function(){
-    $("#weather-form").submit(function(e){
-        e.preventDefault();
-        $.ajax({
-            url: "/weather_widget/fetch_weather/",
-            method: "POST",
-            data: {
-                location: $("#location").val(),
-                csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
-            },
-            success: function(data){
-                if(data.city){
-                    $(".weather-widget").html(`
-                        <h2>${data.city}</h2>
-                        <p class="temperature">Temperatuur: ${data.temperature}°C</p>
-                        <p>Kirjeldus: ${data.description}</p>
-                    `);
-                } else {
-                    alert("Linna ei leitud!");
+    $(document).ready(function () {
+        $("#weather-form").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/weather_widget/fetch_weather/",
+                method: "POST",
+                data: {
+                    location: $("#location").val(), //'.' takes class, # takes id
+                    csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+                },
+                success: function (data) {
+                    if (data.city) {
+                        let content = `<h2>${data.city}</h2>`;
+                        content += `<div class="forecast-container">`;
+
+                        let groupedByDay = {};
+                        for (let forecast of data.forecasts) {
+                            let date = new Date(forecast.date_time).toDateString();
+                            if (!groupedByDay[date]) groupedByDay[date] = [];
+                            groupedByDay[date].push(forecast);
+                        }
+
+                        let todayStr = new Date().toDateString();
+                        for (let date in groupedByDay) {
+                            let dayLabel = (todayStr === date) ? "täna" : new Date(date).toLocaleString('et-EE', { weekday: 'long' });
+                            content += `
+                            <div class="forecast-entry">
+                                <p><strong>${dayLabel}</strong></p>`;
+
+                            for (let forecast of groupedByDay[date]) {
+                                let roundedTemp = parseFloat(forecast.temperature).toFixed(1);
+                                let hour = new Date(forecast.date_time).getHours();
+                                content += `
+                                <div class="day-time-row">
+                                    <span>${hour}:00</span>
+                                    <span>${roundedTemp}°C</span>
+                                    <img src="http://openweathermap.org/img/wn/${forecast.icon}.png" alt="${forecast.description}">
+                                </div>
+                            `;
+                            }
+                            content += `</div>`;
+                        }
+                        content += `</div>`;
+                        $(".weather-widget").html(content);
+                        // this says where to put the data (in the beginning of the code where "weather data will appear here")
+
+                        $(".weather-widget").show();
+                        $(".weather-widget").css("display", "flex");
+                        $('html, body').animate({
+                            scrollTop: $(".weather-widget").offset().top
+                        });
+
+                    } else {
+                        $(".weather-widget").hide();
+                        alert("Asukohta ei leitud!");
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
                 }
-            },
-            error: function(error){
-                console.error(error);
-            }
+            });
         });
     });
-});
 </script>

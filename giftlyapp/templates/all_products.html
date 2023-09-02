@@ -2,60 +2,47 @@
 {% load static %}
 
 {% block title %}
-{% if category %}{{ category.name }}{% else %}Products{% endif %}
+    <div class="cat-heading">
+        {% if category %}{{ category.name }}{% else %}Products{% endif %}
+    </div>
 {% endblock %}
 
 {% block content %}
-{#<div id="sidebar">#}
-{#    <h3>Category</h3>#}
-{#    <ul>#}
-{#        <li {% if not category %}class="selected"{% endif %}>#}
-{#            <a href="{% url 'all_products' %}">ALL</a>#}
-{#        </li>#}
-{#        {% for c in categories %}#}
-{#        <li {% if category.slug == c.slug %}class="selected" {% endif %}>#}
-{#            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>#}
-{#        </li>#}
-{#        {% endfor %}#}
-{#    </ul>#}
-{#</div>#}
-
-{#<div class="item">#}
-{#    <a href="{{ product.get_absolute_url }}">#}
-{#        <img class="product-image" src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="">#}
-{#    </a>#}
-{#    <!-- Other content for each product -->#}
-{#</div>#}
-
-<div id="main" class="product-list">
-    <h1>{% if category %}{{ category.name }}{% else %}Product{% endif %}</h1>
-    {% for product in page_obj %}
-    <div class="item">
-        <a href="{{ product.get_absolute_url }}">
-            <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="">
-        </a>
-        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-        <br>
-        {{ product.price }}€
+<div id="main" class="product-list-container">
+    <div class="cat-heading">
+        <h1>{% if category %}{{ category.name }}{% else %}Kõik tooted{% endif %}</h1>
     </div>
-    {% endfor %}
-</div>
+    <div class="featured-products">
+        {% for product in page_obj %}
+        <div class="product">
+            <a href="{{ product.get_absolute_url }}">
+                <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="">
+            </a>
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+            <br>
+            <i> {{ product.description|truncatechars:200 }}</i>
+            <br>
+            {{ product.price }}€
+        </div>
+        {% endfor %}
+    </div>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
         </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
+    </div>
 </div>
 {% endblock %}

@@ -42,7 +42,7 @@ def user_login(request):
             login(request, user)
             return redirect("home")
         else:
-            messages.info(request, 'username OR password is incorrect')
+            messages.info(request, 'Kasutajanimi VÕI parool on vale')
     context = {}
     return render(request, 'registration/login.html', context)
 
@@ -301,3 +301,7 @@ def check_orders(request):
     }
 
     return render(request, 'check_orders.html', context)
+
+  
+def info(request):
+    return render(request, "info.html")

@@ -4,14 +4,13 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #7abecc !important;
 }
 
 .user_card {
   width: 350px;
   margin-top: auto;
   margin-bottom: auto;
-  background: #74cfbf;
+  background-color: #f9f9f9;
   position: relative;
   display: flex;
   justify-content: center;
@@ -28,7 +27,7 @@ html {
 }
 
 #form-title {
-  color: #fff;
+  color: #495057;
 }
 
 .login_btn {

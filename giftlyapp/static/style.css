@@ -5,18 +5,36 @@
     box-sizing: border-box;
 }
 
+body {
+    display: flex;
+    flex-direction: column; /* to layout children (parent div and footer) vertically */
+    min-height: 100vh; /* to ensure the body occupies the full viewport height */
+    margin: 0; /* reset margin */
+}
+
 .parent {
     display: flex;
     justify-content: center;
+    flex: 1; /* to make sure this element takes up all available space, pushing footer to the bottom */
 }
 
 .wrapper {
     max-width: 1200px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* center children horizontally */
+    align-items: center;
     width: 100%;
 }
+
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    /* margin-top: auto; This rule can be kept, but it's not strictly necessary if parent has flex: 1 */
+}
+
 
 .header {
     background-color: #ffffff;
@@ -60,7 +78,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: #ffffff;
-    height: 50px;
+    height: auto;
     width: 100%;
     position: relative;
 }
@@ -106,6 +124,22 @@
 .profile-link {
     margin-top: 10px;
     margin-right: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.logout-link {
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.login-link {
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
     text-decoration: none;
     color: black;
 }
@@ -158,15 +192,27 @@
     align-items: center;
     padding: 20px;
     margin-bottom: 10px;
-    border: 5px solid #ddd;
+    /*border: 5px solid #ddd;*/
     background-color: white;
     width: 100%; /* Take full width of the grid column */
+    /*border-radius: 5px;*/
+}
+/*Makes links under .product black instead of underlined link look*/
+.product a {
+    color: black;
+    text-decoration: none;
+ }
+
+.product:hover{
+    background-color: rgba(0, 84, 84, 0.14);  /* This is a light grey color. Change it to whatever you want */
+    transition: background-color 0.3s ease; /* Optional: This will make the color change smoothly */
 }
 
 .product img {
     max-width: 100%;
-    height: auto;
     margin-bottom: 10px;
+    width: 300px;
+    height: 300px;
 }
 
 .product h3 {
@@ -196,20 +242,17 @@
 }
 
 .weather-widget-container {
+    width: 100%;
     display: flex;
     justify-content: center;  /* horizontally center */
     align-items: center;      /* vertically center */
     flex-direction: column;   /* stack vertically */
 }
 
-.footer {
-    background-color: #333;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-    width: 100%;
-    margin-top: auto;
+#tallinn-quick-view {
+    text-wrap: nowrap;
 }
+
 
 /* Set the width and height of product images */
 .item img {
@@ -220,11 +263,13 @@
 
 
 .user-profile {
-    margin-left: 250px;
-    margin-top: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 25%;
     padding: 20px;
     background-color: #f9f9f9;
-    overflow: hidden;
     width: 50%;
     height: 50%;
 }
@@ -252,8 +297,20 @@
 }
 
 .profile-button {
-    margin-left: 250px;
-    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 25%;
+    padding: 20px;
+    width: 50%;
+    height: 50%;
+}
+
+.profile-button a {
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: black;
 }
 
 .explore-button {
@@ -263,6 +320,17 @@
     align-items: center;      /* vertically center */
     flex-direction: column;   /* stack vertically */
     margin-bottom: 40px;
+
+}
+
+.explore-button-small {
+    align-content: center;
+    display: flex;
+    justify-content: center;  /* horizontally center */
+    align-items: center;      /* vertically center */
+    flex-direction: column;   /* stack vertically */
+    margin-bottom: 40px;
+    margin-top: 20px;
 
 }
 
@@ -350,6 +418,12 @@
     background-color: #ddd;
 }
 
+.cat-heading{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
 /* Positioning for parent categories with child items */
 .parent-category {
     position: relative;
@@ -378,9 +452,16 @@
 /* Media Query for Mobile view */
 @media (max-width: 768px) {
     .header-bar {
+        display: flex;
         flex-direction: column;
-        height: auto;  /* Allow the height to adjust based on content */
-        padding: 10px 0; /* Add some vertical padding */
+        align-items: center;
+        width: 100%;
+    }
+
+    .customer-links {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
     }
 
     .header-buttons, .cart-button {
@@ -447,3 +528,30 @@
         width: 100%; /* Use full width */
     }
 }
+
+
+/*teised lehed*/
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+
+
+.product-list-container {
+    max-width: 1200px;  /* This can be adjusted to any desirable width */
+    margin: 0 auto;  /* Centers the container on the page */
+    padding: 20px;  /* Gives some space around the content */
+}
+
+.product-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: start;
+    gap: 20px;  /* Provides spacing between items, works better than margin in a flex layout */
+}
+
+
