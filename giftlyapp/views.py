@@ -155,7 +155,8 @@ def cart_remove(request, product_id):
 
 @login_required
 def cart_detail(request):
-    cart_items = ShoppingCartItem.objects.filter(shopping_cart__user=request.user)
+    user_id = request.user.id  # Extract the user's ID
+    cart_items = ShoppingCartItem.objects.filter(shopping_cart__user=user_id)
     total_price = sum(item.product.price * item.quantity for item in cart_items)
     for item in cart_items:
         item.update_quantity_form = ShoppingCartAddProductForm(
@@ -313,7 +314,6 @@ def info(request):
     return render(request, "info.html")
 
 
-@login_required
 def add_to_cart(request, product_id):
     # Retrieve the product and form data
     product = get_object_or_404(Product, id=product_id)
