@@ -55,7 +55,7 @@ class Product(models.Model):
     )
     name = models.CharField(max_length=255, db_index=True, blank=True, null=True)
     slug = models.SlugField(max_length=150, db_index=True, unique=True, blank=True, null=True)
-    description = models.CharField(max_length=255, blank=True, null=True)
+    description = models.CharField(max_length=1000, blank=True, null=True)
     thumbnail = models.ImageField(upload_to='products/', blank=True, null=True)
     price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     purchase_count = models.PositiveIntegerField(default=0)
