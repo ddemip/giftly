@@ -88,8 +88,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'giftly',
-        'USER': 'admin',
-        'PASSWORD': 'admin123',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'db',   # Service name from docker-compose.yml
         'PORT': '3306',  # Default MySQL port
     }
@@ -118,8 +118,6 @@ LOGIN_REDIRECT_URL = '/profile/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 

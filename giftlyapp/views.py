@@ -13,7 +13,6 @@ from random import sample
 from django.db.models import Q
 from django.contrib.auth.forms import PasswordChangeForm
 
-
 User = get_user_model()
 
 
@@ -25,7 +24,7 @@ def register(request):
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get('username')
-            messages.success(request, f'Account was created for: {user}')
+            messages.success(request, f'Kasutaja {user} on loodud')
             return redirect('login')
 
     context = {'form': form}
@@ -50,16 +49,11 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    messages.success(request, "You have been logged out")
+    messages.success(request, "Oled välja logitud")
     return redirect("home")
 
 
-def password_change(request):
-    return render(request, 'registration/pwd-reset.html')
-
-
 def home(request):
-
     all_products_list = Product.objects.all()
 
     num_random_products = min(6, len(all_products_list))
@@ -95,7 +89,7 @@ def user_profile_view(request):
         user_form = UserProfileUpdateForm(request.POST, instance=user)
         if user_form.is_valid():
             user_form.save()
-            messages.success(request, 'Your profile has been updated successfully!')
+            messages.success(request, 'Profiil on edukalt uuendatud!')
 
     context = {
         'user_form': user_form,
@@ -113,7 +107,7 @@ def profile(request):
         user_form = UserProfileUpdateForm(request.POST, instance=request.user)
         if user_form.is_valid():
             user_form.save()
-            messages.success(request, 'Your profile has been updated successfully!')
+            messages.success(request, 'Profiil on edukalt uuendatud!')
 
     context = {
         'user_form': user_form,
@@ -128,7 +122,7 @@ def update_profile(request):
         form = UserProfileUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your profile has been updated successfully!')
+            messages.success(request, 'Profiil on edukalt uuendatud!')
             return redirect('profile')
     else:
         form = UserProfileUpdateForm(instance=request.user)
@@ -137,6 +131,7 @@ def update_profile(request):
     return render(request, 'update_profile.html', context)
 
 
+@login_required
 @require_POST
 def cart_add(request, product_id):
     # Retrieve the product and form data
@@ -150,6 +145,7 @@ def cart_add(request, product_id):
     return redirect('cart_view')
 
 
+@login_required
 def cart_remove(request, product_id):
     cart = CustomShoppingCart(request)
     product = get_object_or_404(Product, id=product_id)
@@ -157,6 +153,7 @@ def cart_remove(request, product_id):
     return redirect('cart_detail')
 
 
+@login_required
 def cart_detail(request):
     cart_items = ShoppingCartItem.objects.filter(shopping_cart__user=request.user)
     total_price = sum(item.product.price * item.quantity for item in cart_items)
@@ -203,6 +200,7 @@ def search_products(request):
     return render(request, 'search_result.html', context)
 
 
+@login_required
 def checkout(request):
     cart = CustomShoppingCart(request)
     if request.method == 'POST':
@@ -252,6 +250,7 @@ def checkout(request):
     return render(request, 'cart/checkout.html', context)
 
 
+@login_required
 def order_confirmation(request, order_id):
     order = get_object_or_404(Order, id=order_id)
 
@@ -267,7 +266,7 @@ def order_confirmation(request, order_id):
         return render(request, 'cart/order_confirmation.html', context)
     else:
         # Handle unauthorized access to the order confirmation page
-        messages.error(request, 'You do not have permission to view this order.')
+        messages.error(request, 'Ligipääs puudub.')
         return redirect('home')
 
 
@@ -278,10 +277,10 @@ def update_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Your password was successfully updated!')
+            messages.success(request, 'Parool on edukalt uuendatud!')
             return redirect('profile')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Palun paranda vead.')
     else:
         form = PasswordChangeForm(request.user)
 
@@ -309,11 +308,12 @@ def check_orders(request):
 
     return render(request, 'check_orders.html', context)
 
-  
+
 def info(request):
     return render(request, "info.html")
 
 
+@login_required
 def add_to_cart(request, product_id):
     # Retrieve the product and form data
     product = get_object_or_404(Product, id=product_id)
