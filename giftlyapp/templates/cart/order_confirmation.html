@@ -17,7 +17,7 @@
     <h3>Tooted:</h3>
     <ul>
       {% for item in order.shoppingcartitem_set.all %}
-        <li>{{ item.product.name }} ({{ item.quantity }}) - €{{ item.total_price }}</li>
+        <li>{{ item.product.name }} ({{ item.quantity }})</li>
       {% endfor %}
     </ul>
 

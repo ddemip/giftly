@@ -7,11 +7,12 @@ from django.views.decorators.http import require_POST
 from .models import Product, Category, Order, PaymentDetail, ShoppingCartItem, Customer
 from .forms import UserProfileUpdateForm, UserCreationForm, CheckoutForm
 from .shopping_cart import ShoppingCart as CustomShoppingCart
-from .forms import ShoppingCartAddProductForm
+from .forms import ShoppingCartAddProductForm, AddToCartForm
 from django.core.paginator import Paginator
 from random import sample
 from django.db.models import Q
 from django.contrib.auth.forms import PasswordChangeForm
+
 
 User = get_user_model()
 
@@ -146,7 +147,7 @@ def cart_add(request, product_id):
     cart = CustomShoppingCart(request)
     cart.add(product=product, quantity=quantity, update_quantity=True)
 
-    return redirect('cart_detail')
+    return redirect('cart_view')
 
 
 def cart_remove(request, product_id):
@@ -305,3 +306,39 @@ def check_orders(request):
   
 def info(request):
     return render(request, "info.html")
+
+
+def add_to_cart(request, product_id):
+    # Retrieve the product and form data
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.method == 'POST':
+        form = AddToCartForm(request.POST)  # Create an instance of your form
+
+        if form.is_valid():
+            quantity = form.cleaned_data['quantity']
+
+            # Add or update the item in the cart
+            cart = CustomShoppingCart(request)
+            cart.add(product=product, quantity=quantity, update_quantity=True)
+
+            # Render the same product_detail.html template with the form and a success message
+            context = {
+                'product': product,
+                'cart_product_form': form,  # Include your form here
+                'product_added_to_cart': True,  # Add a flag to indicate success
+            }
+
+            return render(request, 'product_detail.html', context)
+
+    # Handle GET requests or form validation errors
+    else:
+        form = AddToCartForm(initial={'quantity': 1})  # Create a form with initial data
+
+    # Render the product_detail.html template with the form
+    context = {
+        'product': product,
+        'cart_product_form': form,
+    }
+
+    return render(request, 'product_detail.html', context)

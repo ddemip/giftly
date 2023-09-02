@@ -87,3 +87,11 @@ class CheckoutForm(forms.ModelForm):
             self.add_error('gift_recipient_name', 'This field is required for gift orders.')
 
         return cleaned_data
+
+
+class AddToCartForm(forms.Form):
+    quantity = forms.IntegerField(
+        min_value=1,
+        initial=1,
+        widget=forms.NumberInput(attrs={'class': 'quantity-input'}),
+    )

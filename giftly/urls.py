@@ -26,6 +26,7 @@ urlpatterns = [
     path('profile/<int:pk>/', views.user_profile_view, name='profile'),
     path('update_password/', views.update_password, name='update_password'),
     path('password_change/', views.password_change, name='pwd-reset'),
+    path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart_detail, name='cart_detail'),
     path('add/<int:product_id>/', views.cart_add, name='cart_add'),
     path('remove/<int:product_id>/', views.cart_remove, name='cart_remove'),
