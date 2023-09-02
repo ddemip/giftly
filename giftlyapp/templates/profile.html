@@ -4,15 +4,19 @@
 {% block content %}
     <main class="content">
         <div class="user-profile">
-            <h2>User Profile</h2>
-            <p>Username: {{ user.username }}</p>
-            <p>First Name: {{ user.first_name }}</p>
-            <p>Last Name: {{ user.last_name }}</p>
+            <h2>Kasutaja andmed</h2>
+            <p>Kasutajanimi: {{ user.username }}</p>
+            <p>Eesnimi: {{ user.first_name }}</p>
+            <p>Perekonnanimi: {{ user.last_name }}</p>
             <p>Email: {{ user.email }}</p>
 
             <!-- Display Address and City (Not saved in the database) -->
-            <p>City: {{ user_form.city.value }}</p>
-            <p>Address: {{ user_form.address.value }}</p>
+            {% if user_form.city.value %}
+                Linn: {{ user_form.city.value }}
+            {% endif %}
+            {% if user_form.address.value %}
+                <p>Aadress: {{ user_form.address.value }}</p>
+            {% endif %}
         </div>
         <!-- Display messages -->
         {% if messages %}
@@ -24,8 +28,8 @@
         {% endif %}
 
         <div class="profile-button">
-            <a href="{% url 'update_profile' %}" class="btn btn-search">Edit Profile</a>
-            <a href="{% url 'update_password' %}" class="btn btn-search">Update Password</a>
+            <a href="{% url 'update_profile' %}" class="btn btn-search">Muuda profiili</a>
+            <a href="{% url 'update_password' %}" class="btn btn-search">Uuenda parool</a>
         </div>
     </main>
 {% endblock %}

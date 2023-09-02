@@ -1,0 +1,40 @@
+<a href="#" class="btn-header" id="tallinn-quick-view">Tallinn <span id="tallinn-temp"></span></a>
+
+<script>
+    $(document).ready(function () {
+
+        // Fetch Tallinn's weather on load
+        function fetchTallinnWeatherOnLoad() {
+            $.ajax({
+                url: "/weather_widget/fetch_weather/",
+                method: "POST",
+                data: {
+                    location: 'Tallinn',
+                    csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+                },
+                success: function (data) {
+                    if (data.city && data.forecasts && data.forecasts.length) {
+                        $('#tallinn-temp').text(`${parseFloat(data.forecasts[0].temperature).toFixed(1)}°C`);
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        fetchTallinnWeatherOnLoad();
+
+        // Scroll to the main weather widget, fill input with 'Tallinn' then trigger the request on click,
+        // then scroll down after that
+        $('#tallinn-quick-view').click(function (e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: $("#weather-form").offset().top
+            }, 1000, function () {
+                $('#location').val('Tallinn');
+                $('#weather-form').submit();
+            });
+        });
+    });
+</script>
