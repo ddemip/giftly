@@ -7,51 +7,55 @@
 
 {% block content %}
 <main class="content">
- <div class="user-profile">
-  <h1>Cart</h1>
-  <table class="shoppingcart">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Update qty</th>
-        <th>Delete</th>
-        <th>Qty</th>
-        <th>Price per unit</th>
-        <th>Total price</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in cart %}
+  <div class="detail-container">
+    <h1 class="detail-title">Ostukorv</h1>
+    <table class="shoppingcart">
+      <thead>
+        <tr>
+          <th>Toode</th>
+          <th>Kogus</th>
+          <th>Kustuta</th>
+          <th>Tükihind</th>
+          <th>Hind</th>
+        </tr>
+      </thead>
+      <hr class="detail-category-divider">
+      <tbody>
+        {% for item in cart %}
         {% with product=item.product %}
-          <tr>
-            <td>{{ product.name }}</td>
-            <td>
-              <form action="{% url 'cart_add' product.id %}" method="post">
-                  <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                  <input type="submit" value="Update">
-                {% csrf_token %}
-              </form>
-            </td>
-            <td><a href="{% url 'cart_remove' product.id %}">Delete</a></td>
-            <td>
-              {{ item.quantity }}
-            </td>
-            <td class="num">${{ item.price }}</td>
-            <td class="num">${{ item.total_price }}</td>
-          </tr>
+        <tr class="">
+          <td>
+            <img src="{{ product.thumbnail.url }}" alt="{{ product.name }} Thumbnail" width="50" height="50">
+            <span class="detail-name">{{ product.name|truncatechars:20 }}</span>
+          </td>
+          <td>
+           <div class="">
+            <form action="{% url 'cart_add' product.id %}" method="post">
+              <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+              <input type="submit" value="Uuenda">
+              {% csrf_token %}
+            </form>
+           </div>
+          </td>
+          <td><a href="{% url 'cart_remove' product.id %}" class="delete-button">Kustuta</a></td>
+          <td class="num">&euro;{{ item.price|floatformat:2 }}</td>
+          <td class="num">&euro;{{ item.total_price|floatformat:2 }}</td>
+        </tr>
         {% endwith %}
-      {% endfor %}
-      <tr class="total">
-        <td>Total</td>
-        <td colspan="4"></td>
-        <td class="num">${{ cart.get_total_price }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <p class="text-right">
-    <a href="{% url 'home' %}" class="button light">Back to the shop</a>
-    <a href="{% url 'checkout' %}" class="button">Make an order</a>
-  </p>
- </div>
+        {% endfor %}
+        <tr class="total">
+          <td>Kokku</td>
+          <td colspan="4"></td>
+          <td class="detail-total-price">&euro;{{ cart.get_total_price|floatformat:2 }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="text-right">
+      <hr class="detail-category-divider">
+      <a href="{% url 'home' %}" class="detail-button">Tagasi Pealehele</a>
+      <a href="{% url 'checkout' %}" class="detail-button">Tellimuse Vormistamine</a>
+    </p>
+    <link rel="stylesheet" type="text/css" href="{% static 'cart.css' %}">
+  </div>
 </main>
 {% endblock %}

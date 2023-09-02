@@ -2,30 +2,28 @@
 {% load static %}
 
 {% block content %}
-    <main class="content">
-        <div class="user-profile">
-            <h2>User Profile</h2>
-            <p>Username: {{ user.username }}</p>
-            <p>First Name: {{ user.first_name }}</p>
-            <p>Last Name: {{ user.last_name }}</p>
-            <p>Email: {{ user.email }}</p>
+<main class="content">
+    <div class="user-profile">
+        <h2>Kasutajaprofiil</h2>
+        <p>Kasutajanimi: {{ user.username }}</p>
+        <p>Eesnimi: {{ user.first_name }}</p>
+        <p>Perekonnanimi: {{ user.last_name }}</p>
+        <p>Email: {{ user.email }}</p>
+    </div>
 
-            <!-- Display Address and City (Not saved in the database) -->
-            <p>City: {{ user_form.city.value }}</p>
-            <p>Address: {{ user_form.address.value }}</p>
-        </div>
-        <!-- Display messages -->
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+    <!-- Display messages -->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
-        <div class="profile-button">
-            <a href="{% url 'update_profile' %}" class="btn btn-search">Edit Profile</a>
-            <a href="{% url 'update_password' %}" class="btn btn-search">Update Password</a>
-        </div>
-    </main>
+    <div class="profile-button">
+        <a href="{% url 'update_profile' %}" class="btn btn-search">Uuenda Profiili</a>
+        <a href="{% url 'update_password' %}" class="btn btn-search">Uuenda Parooli</a>
+        <a href="{% url 'check_orders' %}" class="btn btn-search">Tellimuste ajalugu</a>
+    </div>
+</main>
 {% endblock %}

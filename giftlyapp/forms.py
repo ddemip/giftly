@@ -5,12 +5,10 @@ from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 
 
 class UserProfileUpdateForm(forms.ModelForm):
-    address = forms.CharField(max_length=255, required=False)
-    city = forms.CharField(max_length=255, required=False)
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'address', 'city']
+        fields = ['first_name', 'last_name']
 
 
 class CustomerProfileUpdateForm(forms.ModelForm):
@@ -60,7 +58,8 @@ class CheckoutForm(forms.ModelForm):
         fields = ['sender_name', 'sender_email', 'is_gift', 'gift_recipient_name', 'recipient_email', 'payment_method']
 
     PAYMENT_METHOD_CHOICES = [
-        ('credit_card', 'Credit Card'),
+        ('credit_card', 'Pangalingiga'),
+        ('credit_card', 'Krediitkaart'),
         ('paypal', 'PayPal'),
         ('apple_pay', 'Apple Pay'),
         ('google_pay', 'Google Pay'),
