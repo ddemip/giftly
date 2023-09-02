@@ -8,40 +8,40 @@
 {% block content %}
 <main class="content">
   <div class="checkout">
-    <h1>Checkout</h1>
+    <h1 class="detail-title">Tellimuse Vormistamine</h1>
     <form method="post" action="{% url 'checkout' %}">
       {% csrf_token %}
 
-      <h2>Sender Information</h2>
-      <label for="{{ form.sender_name.id_for_label }}">Your Name:</label>
+      <h2>Saatja informatioon</h2>
+      <label for="{{ form.sender_name.id_for_label }}">Ees ja Perekonna Nimi:</label>
       {{ form.sender_name }}
-      <label for="{{ form.sender_email.id_for_label }}">Your Email:</label>
+      <label for="{{ form.sender_email.id_for_label }}">Email:</label>
       {{ form.sender_email }}
 
-      <h2>Recipient Information</h2>
-      <label for="{{ form.is_gift.id_for_label }}">Is this a gift?</label>
+      <h2>Saaja informatsioon</h2>
+      <label for="{{ form.is_gift.id_for_label }}">Kas see on kingitus? (Endale ostu puhul pole vaja täita)</label>
       {{ form.is_gift }}
       <div id="gift-fields" style="display: none;">
-        <label for="{{ form.gift_recipient_name.id_for_label }}">Gift Recipient Name:</label>
+        <label for="{{ form.gift_recipient_name.id_for_label }}">Saaja Ees ja Perekonna Nimi:</label>
         {{ form.gift_recipient_name }}
       </div>
       <div id="gift-recipient-fields" style="display: none;">
-        <label for="{{ form.recipient_email.id_for_label }}">Recipient Email:</label>
+        <label for="{{ form.recipient_email.id_for_label }}">Saaja Email:</label>
         {{ form.recipient_email }}
       </div>
 
-      <h2>Payment Method</h2>
-      <label for="{{ form.payment_method.id_for_label }}">Payment Method:</label>
+      <h2>Makseviis</h2>
+      <label for="{{ form.payment_method.id_for_label }}">Vali sobiv maksemeetod:</label>
       {{ form.payment_method }}
 
       <!-- Order Summary -->
-      <h2>Order Summary</h2>
+      <h2>Tellimuse Kokkuvõte</h2>
       <table class="order-summary">
         <thead>
           <tr>
-            <th>Product</th>
-            <th>Qty</th>
-            <th>Price</th>
+            <th>Toode</th>
+            <th>Kogus</th>
+            <th>Hind</th>
           </tr>
         </thead>
         <tbody>
@@ -49,15 +49,15 @@
             <tr>
               <td>{{ item.product.name }}</td>
               <td>{{ item.quantity }}</td>
-              <td>${{ item.price }}</td>
+              <td>€{{ item.price }}</td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
-      <p>Total: ${{ cart.get_total_price }}</p>
+      <p>Kokku: €{{ cart.get_total_price }}</p>
 
       <!-- Submit Button -->
-      <button type="submit" class="button">Place Order</button>
+      <button type="submit" class="detail-button">Esita tellimus</button>
     </form>
     <script>
       document.addEventListener('DOMContentLoaded', function() {

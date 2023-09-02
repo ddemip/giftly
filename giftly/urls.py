@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 import giftlyapp.views as views
 from django.contrib.staticfiles.urls import static
@@ -8,6 +8,8 @@ from weather_widget import views as weather_views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('check_orders/', views.check_orders, name='check_orders'),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('search/', views.search_products, name='search_products'),
     path('checkout/', views.checkout, name='checkout'),
     path('order_confirmation/<int:order_id>/', views.order_confirmation, name='order_confirmation'),

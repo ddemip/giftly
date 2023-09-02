@@ -106,6 +106,7 @@ def user_profile_view(request):
 @login_required
 def profile(request):
     user_form = UserProfileUpdateForm(instance=request.user)
+    user_orders = Order.objects.filter(customer__user=request.user).order_by('-date')
 
     if request.method == 'POST':
         user_form = UserProfileUpdateForm(request.POST, instance=request.user)
@@ -115,6 +116,7 @@ def profile(request):
 
     context = {
         'user_form': user_form,
+        'user_orders': user_orders
     }
     return render(request, 'profile.html', context)
 
@@ -279,6 +281,27 @@ def update_password(request):
     context = {'form': form}
     return render(request, 'update_password.html', context)
 
+
+@login_required
+def check_orders(request):
+    user = request.user
+    try:
+        customer = Customer.objects.get(user=user)
+    except Customer.DoesNotExist:
+        customer = None
+
+    if customer:
+        orders = Order.objects.filter(customer=customer)
+    else:
+        orders = []
+
+    context = {
+        'user': user,
+        'orders': orders,
+    }
+
+    return render(request, 'check_orders.html', context)
+
+  
 def info(request):
     return render(request, "info.html")
-

@@ -75,7 +75,7 @@
 .order-confirmation {
   max-width: 600px;
   margin: 0 auto;
-  background-color: #6c2121;
+  background-color: #f9f9f9;
   padding: 20px;
   border: 1px solid #ddd;
 }
@@ -111,10 +111,11 @@ li {
 .order-confirmation-box {
   max-width: 600px;
   padding: 20px;
-  border: 1px solid #ddd;
-  background-color: #c70e0e;
+  background-color: #f9f9f9;
   text-align: center;
   margin-left: 600px;
+  border: 2px solid #008080; /* Greenish border */
+  border-radius: 5px; /* Rounded corners */
 }
 
 .order-confirmation-box h1 {
@@ -123,3 +124,172 @@ li {
 }
 
 /* Add more styles as needed */
+
+/* cart.css */
+
+/* Styles for the detail page */
+.detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.detail-content {
+    max-width: 100%; /* Ensure content doesn't exceed the container's width */
+    margin: 0 auto; /* Center the content horizontally */
+    padding: 0 20px; /* Add padding to keep content away from the container's edges */
+    position: relative;
+}
+
+.detail-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.detail-product-container img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px; /* Add some spacing between thumbnail and name */
+}
+
+.detail-name {
+    font-size: 16px;
+    color: #333;
+    max-width: 200px; /* Adjust the max width as needed */
+    white-space: nowrap; /* Prevent line breaks */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis (...) for truncated text */
+    margin-top: 5px; /* Add some space between the image and name */
+}
+
+.detail-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.detail-total-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #008080;
+    margin-bottom: 20px;
+}
+
+.detail-product-container {
+    border: 2px solid #008080; /* Greenish border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    display: flex; /* Ensure the product details are displayed in a row */
+    align-items: center; /* Vertically center the product details */
+    max-width: 700px;
+}
+
+
+
+.detail-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #008080; /* Use the greenish color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.detail-button.light {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.detail-button:hover {
+    background-color: #004242; /* Darker greenish color on hover */
+}
+
+.detail-category-divider {
+    margin: 20px 0; /* Adjust margin spacing as needed */
+    border: none;
+    border-top: 2px solid #ddd; /* Customize the line color and style */
+}
+
+.shoppingcart th {
+    text-align: center; /* Center-align the text in header cells */
+    background-color: #f2f2f2; /* Light background color for headers */
+    padding: 10px; /* Add some padding for spacing */
+    border: 1px solid #ddd; /* Add a border for separation */
+}
+
+.shoppingcart th:first-child {
+    text-align: left; /* Left-align the first header (e.g., "Toode") */
+}
+
+.shoppingcart th:nth-child(2),
+.shoppingcart th:nth-child(3) {
+    text-align: center; /* Center-align headers for quantity and delete */
+}
+
+.shoppingcart th:last-child {
+    text-align: right; /* Right-align the last two headers (unit price and total) */
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    width: 30px; /* Adjust the width as needed */
+    margin: 0 auto; /* Center align within the cell */
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-button {
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.quantity-button.subtract {
+    margin-right: 5px;
+}
+
+.quantity-input {
+    width: 30px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px;
+    margin-right: 5px; /* Add some spacing to separate input and button */
+}
+
+.update-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.delete-button {
+    color: red;
+    text-decoration: none; /* Remove underline */
+}
+
+.delete-button:hover,
+.delete-button:visited,
+.delete-button:active {
+    color: red; /* Maintain the red color on hover, visited, and active states */
+}
