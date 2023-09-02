@@ -1,18 +1,19 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, get_user_model, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from .models import ShoppingCart, Product, Category
-from .forms import UserProfileUpdateForm, CustomerProfileUpdateForm, UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView
-from django.contrib.auth.models import User
-from .shopping_cart import ShoppingCart
+from .models import Product, Category, Order, PaymentDetail, ShoppingCartItem, Customer
+from .forms import UserProfileUpdateForm, UserCreationForm, CheckoutForm
+from .shopping_cart import ShoppingCart as CustomShoppingCart
 from .forms import ShoppingCartAddProductForm
 from django.core.paginator import Paginator
 from random import sample
+from django.db.models import Q
+from django.contrib.auth.forms import PasswordChangeForm
+
+User = get_user_model()
 
 
 def register(request):
@@ -60,7 +61,7 @@ def home(request):
 
     all_products_list = Product.objects.all()
 
-    num_random_products = 6
+    num_random_products = min(6, len(all_products_list))
     random_products = sample(list(all_products_list), num_random_products)
 
     context = {
@@ -84,31 +85,36 @@ def product_detail_view(request, product_slug, category_slug=None):
     return render(request, 'product_detail.html', context)
 
 
-class UserProfileView(LoginRequiredMixin, DetailView):
-    model = User
-    template_name = 'profile.html'
-    context_object_name = 'user'
+@login_required
+def user_profile_view(request):
+    user = request.user
+    user_form = UserProfileUpdateForm(instance=user)
 
-    def get_object(self, queryset=None):
-        return self.request.user
+    if request.method == 'POST':
+        user_form = UserProfileUpdateForm(request.POST, instance=user)
+        if user_form.is_valid():
+            user_form.save()
+            messages.success(request, 'Your profile has been updated successfully!')
+
+    context = {
+        'user_form': user_form,
+        'user': user,
+    }
+    return render(request, 'profile.html', context)
 
 
 @login_required
 def profile(request):
     user_form = UserProfileUpdateForm(instance=request.user)
-    customer_form = CustomerProfileUpdateForm(instance=request.user.customer)
 
     if request.method == 'POST':
         user_form = UserProfileUpdateForm(request.POST, instance=request.user)
-        customer_form = CustomerProfileUpdateForm(request.POST, instance=request.user.customer)
-
-        if user_form.is_valid() and customer_form.is_valid():
+        if user_form.is_valid():
             user_form.save()
-            customer_form.save()
+            messages.success(request, 'Your profile has been updated successfully!')
 
     context = {
         'user_form': user_form,
-        'customer_form': customer_form,
     }
     return render(request, 'profile.html', context)
 
@@ -130,31 +136,32 @@ def update_profile(request):
 
 @require_POST
 def cart_add(request, product_id):
-    products = Product.objects.all()
-    cart = ShoppingCart(request)
-    product = get_object_or_404(products, id=product_id)
-    form = ShoppingCartAddProductForm(request.POST)
-    if form.is_valid():
-        clean_data = form.cleaned_data
-        cart.add(product=product,
-                 quantity=clean_data['quantity'],
-                 update_quantity=clean_data['update'])
+    # Retrieve the product and form data
+    product = get_object_or_404(Product, id=product_id)
+    quantity = int(request.POST.get('quantity', 1))  # Get the quantity from the form data
+
+    # Add or update the item in the cart
+    cart = CustomShoppingCart(request)
+    cart.add(product=product, quantity=quantity, update_quantity=True)
+
     return redirect('cart_detail')
 
 
 def cart_remove(request, product_id):
-    cart = ShoppingCart(request)
+    cart = CustomShoppingCart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
     return redirect('cart_detail')
 
 
 def cart_detail(request):
-    cart = ShoppingCart(request)
-    for item in cart:
-        item['update_quantity_form'] = \
-            ShoppingCartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
-    return render(request, 'cart/detail.html', {'cart': cart})
+    cart_items = ShoppingCartItem.objects.filter(shopping_cart__user=request.user)
+    total_price = sum(item.product.price * item.quantity for item in cart_items)
+    for item in cart_items:
+        item.update_quantity_form = ShoppingCartAddProductForm(
+            initial={'quantity': item.quantity, 'update': True}
+        )
+    return render(request, 'cart/detail.html', {'cart_items': cart_items, 'total_price': total_price})
 
 
 def all_products(request, category_slug=None):
@@ -177,8 +184,97 @@ def all_products(request, category_slug=None):
     })
 
 
-""""""""""
-def category_list(request):
-    categories = Category.objects.all()
-    return render(request, 'category_list.html', {'categories': categories})
-"""""""""
+def search_products(request):
+    query = request.GET.get('q')
+
+    if query:
+        products = Product.objects.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(category__name__icontains=query)
+        )
+        context = {'products': products, 'query': query}
+    else:
+        context = {}
+
+    return render(request, 'search_result.html', context)
+
+
+def checkout(request):
+    cart = CustomShoppingCart(request)
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            # Create an order
+            user = request.user if request.user.is_authenticated else None
+            customer = None
+            if user:
+                customer, created = Customer.objects.get_or_create(user=user)
+
+            order = Order(
+                customer=customer,
+                sender_name=form.cleaned_data['sender_name'],
+                sender_email=form.cleaned_data['sender_email'],
+                is_gift=form.cleaned_data['is_gift'],
+                gift_recipient_name=form.cleaned_data['gift_recipient_name']
+                if form.cleaned_data['is_gift'] else form.cleaned_data['sender_name'],
+                recipient_email=form.cleaned_data['recipient_email']
+                if form.cleaned_data['is_gift'] else form.cleaned_data['sender_email'],
+                total_cost=cart.get_total_price()
+            )
+            order.save()
+
+            # Create order items and associate them with the order
+            for item in cart:
+                order_item = ShoppingCartItem(order=order, product=item['product'], quantity=item['quantity'])
+                order_item.save()
+
+            # Create payment detail (you may need to handle payment processing here)
+            payment_detail = PaymentDetail(
+                order=order,
+                payment_method=form.cleaned_data['payment_method'],
+                status='Pending'  # You can set the initial payment status here
+            )
+            payment_detail.save()
+
+            # Clear the shopping cart
+            cart.clear()
+
+            # Redirect to the order confirmation page
+            return redirect('order_confirmation', order_id=order.id)
+    else:
+        form = CheckoutForm()
+
+    context = {'cart': cart, 'form': form}
+    return render(request, 'cart/checkout.html', context)
+
+
+def order_confirmation(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    # Ensure that the user has permission to view this order (e.g., if they are logged in)
+    if request.user.is_authenticated and (request.user == order.customer.user):
+        context = {'order': order}
+        return render(request, 'cart/order_confirmation.html', context)
+    else:
+        # Handle unauthorized access to the order confirmation page
+        messages.error(request, 'You do not have permission to view this order.')
+        return redirect('home')
+
+
+@login_required
+def update_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+
+    context = {'form': form}
+    return render(request, 'update_password.html', context)

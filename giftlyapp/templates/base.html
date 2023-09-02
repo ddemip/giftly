@@ -20,8 +20,10 @@
         </header>
         <div class="header-bar">
             <div class="search-container">
-                <div class="magnifying-glass"></div>
-                <input class="search-input" type="text" placeholder="Otsi...">
+                <form action="{% url 'search_products' %}" method="GET">
+                    <div class="magnifying-glass"></div>
+                    <input class="search-input" type="text" name="q" placeholder="Otsi..." value="{{ request.GET.q }}">
+                </form>
             </div>
             <div class="header-buttons">
                 <div class="dropdown">

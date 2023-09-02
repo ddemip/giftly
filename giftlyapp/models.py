@@ -58,6 +58,7 @@ class Product(models.Model):
     description = models.CharField(max_length=255, blank=True, null=True)
     thumbnail = models.ImageField(upload_to='products/', blank=True, null=True)
     price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    purchase_count = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -88,15 +89,17 @@ class ShoppingCart(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
-    basket_id = models.ForeignKey(
-        ShoppingCart, on_delete=models.CASCADE, blank=True, null=True
-    )
-    recipient_email = models.CharField(max_length=255, blank=True, null=True)
+    shopping_cart = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE, blank=True, null=True)
+    sender_name = models.CharField(max_length=255, blank=True, null=True)
+    sender_email = models.EmailField(max_length=255, blank=True, null=True)
     total_cost = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
     date = models.DateTimeField(auto_now=True, blank=True, null=True)
+    recipient_email = models.EmailField(max_length=255, blank=True, null=True)
+    is_gift = models.BooleanField(default=False)
+    gift_recipient_name = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
-        return str(self.total_cost)
+        return f"Order {self.id} - Total Cost: {self.total_cost}"
 
 
 class PaymentDetail(models.Model):
@@ -105,4 +108,14 @@ class PaymentDetail(models.Model):
     status = models.CharField(max_length=10, blank=True, null=True)
 
     def __str__(self):
-        return self.status
+        return f"PaymentDetail - Order: {self.order_id} - Method: {self.payment_method}"
+
+
+class ShoppingCartItem(models.Model):
+    shopping_cart = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE, blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
+    quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"OrderItem - Order: {self.shopping_cart_id} - Product: {self.product.name}"
