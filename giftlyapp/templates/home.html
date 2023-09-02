@@ -10,7 +10,8 @@
             <a href="{{ product.get_absolute_url }}">
                 <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="No Image">
             </a>
-            <h3>{{ product.name }}</h3>
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.price }}€</p>
             <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Detailid</a>
         </div>
         {% if forloop.counter|divisibleby:3 and not forloop.last %}

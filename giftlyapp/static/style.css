@@ -261,17 +261,60 @@ body {
     object-fit: cover; /* Maintain aspect ratio while covering the entire space */
 }
 
+.info-block {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+}
+
+.info-block h2 {
+    margin-bottom: 10px;
+}
+
+.kkk-block {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+}
+
+.kkk-block h2 {
+    margin-bottom: 10px;
+}
+
+.order-history {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+}
+
+.order-table td, .order-table th {
+    padding: 10px 15px; /* Adjust as needed */
+}
 
 .user-profile {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-    margin-left: 25%;
     padding: 20px;
     background-color: #f9f9f9;
-    width: 50%;
-    height: 50%;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
 }
 
 .user-profile h2 {
@@ -301,10 +344,9 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-    margin-left: 25%;
     padding: 20px;
-    width: 50%;
-    height: 50%;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
 }
 
 .profile-button a {
@@ -346,8 +388,31 @@ body {
 }
 
 .product-detail {
-    margin-left: 250px;
-    margin-top: 50px;
+    display: flex;
+    align-items: flex-start;  /* Align items to the top */
+    padding: 20px;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+    position: relative;  /* Added for absolute positioning of child elements */
+}
+
+.product-detail img {
+    margin-right: 20px;  /* Space between the image and details */
+}
+
+.product-info {
+    flex: 1; /* allows it to take up the remaining space */
+}
+
+.product-detail p, h2 {
+    padding: 10px 0;
+}
+
+.add-to-basket {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 }
 
 /*Otsingu css proov*/

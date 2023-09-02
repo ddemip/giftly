@@ -2,11 +2,14 @@
 
 /* Styling for the checkout page */
 .checkout {
-    max-width: 600px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
     padding: 20px;
-    border: 1px solid #ddd;
     background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
 }
 
 .checkout h1 {
@@ -101,21 +104,15 @@ li {
 }
 
 .order-confirmation-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-/* Styling for the order confirmation box */
-.order-confirmation-box {
-  max-width: 600px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  text-align: center;
-  margin-left: 600px;
-  border: 2px solid #008080; /* Greenish border */
-  border-radius: 5px; /* Rounded corners */
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 5px solid #008080;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
 }
 
 .order-confirmation-box h1 {
@@ -220,11 +217,24 @@ li {
     border-top: 2px solid #ddd; /* Customize the line color and style */
 }
 
+.shoppingcart {
+    width: 100%;
+    border-collapse: separate; /* Adjusted to separate for spacing */
+    border-spacing: 0 5px; /* Add vertical spacing between rows */
+    margin-top: 20px;
+}
+
+.shoppingcart th,
+.shoppingcart td {
+    padding: 15px; /* Increased padding */
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align: middle; /* Align content to the middle vertically */
+}
+
 .shoppingcart th {
-    text-align: center; /* Center-align the text in header cells */
-    background-color: #f2f2f2; /* Light background color for headers */
-    padding: 10px; /* Add some padding for spacing */
-    border: 1px solid #ddd; /* Add a border for separation */
+    background-color: #f2f2f2;
+    font-weight: bold;
 }
 
 .shoppingcart th:first-child {
@@ -238,6 +248,17 @@ li {
 
 .shoppingcart th:last-child {
     text-align: right; /* Right-align the last two headers (unit price and total) */
+}
+
+.total td {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+
+.shoppingcart img {
+    margin-right: 10px;
+    vertical-align: middle; /* Align thumbnail to the middle vertically */
 }
 
 .quantity-control {

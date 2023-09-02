@@ -8,6 +8,8 @@
     <title>Giftly</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 </head>
 <body>
 <div class="parent">
@@ -52,8 +54,7 @@
             <div class="customer-links">
                 {% if request.user.is_authenticated %}
                     <a class="profile-link" href="{% url 'profile' %}">
-                        <img src="{% get_media_prefix %}visual/account.png" alt="Account"
-                             style="width: 20px; height: 20px;">
+                        <i class="fas fa-user"></i>
                         <span id="hello-msg">{{ request.user }}</span>
                     </a>
                     <span class="header-separator"></span>
@@ -63,8 +64,7 @@
                 {% endif %}
                 <span class="header-separator"></span>
                 <a class="cart-link" href="{% url 'cart_detail' %}">
-                    <img src="{% get_media_prefix %}visual/shoppingcart.webp" alt="Cart"
-                         style="width: 20px; height: 20px;">
+                    <i class="fas fa-shopping-cart"></i>
                     <div class="cart-info">
                         {% with total_items=cart|length %}
                             {% if cart|length > 0 %}
@@ -87,7 +87,7 @@
     </div>
 </div>
 <footer class="footer">
-    <p>&copy; 2023 Giftly. All rights reserved.</p>
+    <p>&copy; 2023 Giftly. Kõik õigused kaitstud.</p>
 </footer>
 </body>
 </html>
