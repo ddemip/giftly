@@ -1,5 +1,9 @@
 # Giftly online store
 
+![Giftly Preview](./preview.png)
+
+Giftly is an online store platform with features tailored for both users and administrators.
+
 ## Our final project for SDA done by
 
 1) Kaarel - KaarelF
@@ -11,50 +15,45 @@
 This is a website for selling fun little gifts to other people. Gifts are sorted into categories, so there is 
 something for everyone.
 
-### Main features
+## Key Features:
 
-* User and admin panels – user can view products by categories and subcategories, admin can add and delete them.
+- **User and Admin Panels**: While users can view products categorized by main and sub-categories, admins have the privilege to add or delete them.
+  
+- **Weather Widget**: Shows real-time weather data, specifically the temperature in Tallinn.
+  
+- **UI Elements**: Includes static Bootstrap files for a responsive and user-friendly design.
+  
+- **User Account Management**: Allows account creation, profile updates, and account settings.
+  
+- **Gift Ordering System**: Seamlessly process payments via cards and mobile phones.
+  
+- **Database**: The platform runs on MySQL.
 
-* Functioning weather widget that shows the temperature in Tallinn.
+## Getting Started
 
-* Bootstrap static files included
-
-* Account creating and updating functionality
-
-* Gift ordering system that accepts payment by card and mobile phone
-
-* Project runs on MySQL
-
-## Running this app
-
-You'll need to have [Docker installed](https://docs.docker.com/get-docker/).
-You'll also need to have [MySQL Workbench installed](https://dev.mysql.com/downloads/workbench/).
-Both these programs are available on all major operating systems.
+Ensure you have [Docker installed](https://docs.docker.com/get-docker/) on your system. Docker is available for Windows, Linux, and macOS.
 
 #### Clone the repository
 
-In PyCharm click "Get from VCS". In the text box, enter the following address: https://github.com/ddemip/giftly.git
-You can also start new project and activate virtual environment. First navigate to chosen folder using cd on windows
-and ls on Linux/Mac. Then enter following command.
+- If you're using PyCharm:
+    1. Click on "Get from VCS".
+    2. Enter the repository URL: `https://github.com/ddemip/giftly.git`
 
-For Windows:
+- Alternatively, using the terminal or command prompt:
+    ```bash
+    git clone https://github.com/ddemip/giftly.git
+    cd giftly
+    ```
 
-.\venv\Scripts\activate
+### Build and Run the App
 
-For macOS/Linux:
+1. Using the terminal or command prompt, navigate to the root directory of the project.
+2. Build and start the application:
+    ```bash
+    docker-compose up --build
+    ```
+3. Once the services are up, the website will be accessible at `http://127.0.0.1:8000`.
 
-source venv/bin/activate
+## Reporting Issues
 
-#### Building the app:
-
-To build the app, run docker compose up --build in Terminal. Default website is http://127.0.0.1:8000
-
-### Applying migrations to add items to database and make it easier to change items there.
-
-To apply migrations enter manage.py migrate in Terminal.
-
-### Stumbling upon bugs on website:
-
-If by chance there are any performance issues or things missing, let us know. We'll try our best to fix them.
-
-
+If you encounter any bugs or issues, please let us know! We are committed to making continuous improvements to ensure a seamless user experience.
