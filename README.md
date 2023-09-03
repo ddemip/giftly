@@ -6,32 +6,33 @@ Giftly is an online store platform with features tailored for both users and adm
 
 ## Our final project for SDA done by
 
-1) Kaarel - KaarelF
-2) Erich - Erjokul
-3) Demi - ddemip
-4) Natalja - nataljj
+1) Kaarel - [KaarelF](https://github.com/KaarelF)
+2) Erich - [Erjokul](https://github.com/Erjokul)
+3) Demi - [ddemip](https://github.com/ddemip)
+4) Natalja - [nataljj](https://github.com/nataljj)
 
-
-This is a website for selling fun little gifts to other people. Gifts are sorted into categories, so there is 
+This is a website for selling fun little gifts to other people. Gifts are sorted into categories, so there is
 something for everyone.
 
 ## Key Features:
 
-- **User and Admin Panels**: While users can view products categorized by main and sub-categories, admins have the privilege to add or delete them.
-  
-- **Weather Widget**: Shows real-time weather data, specifically the temperature in Tallinn.
-  
+- **User and Admin Panels**: While users can view products categorized by main and sub-categories, admins have the
+  privilege to add or delete them.
+
+- **Weather Widget**: Shows real-time temperature in Tallinn, ability to see forecast for other cities.
+
 - **UI Elements**: Includes static Bootstrap files for a responsive and user-friendly design.
-  
+
 - **User Account Management**: Allows account creation, profile updates, and account settings.
-  
-- **Gift Ordering System**: Seamlessly process payments via cards and mobile phones.
-  
-- **Database**: The platform runs on MySQL.
+
+- **Gift Ordering System**: Ability to order products and view purchase history.
+
+- **Database**: The database runs on MySQL.
 
 ## Getting Started
 
-Ensure you have [Docker installed](https://docs.docker.com/get-docker/) on your system. Docker is available for Windows, Linux, and macOS.
+Ensure you have [Docker installed](https://docs.docker.com/get-docker/) on your system. Docker is available for Windows,
+Linux, and macOS.
 
 #### Clone the repository
 
@@ -54,6 +55,19 @@ Ensure you have [Docker installed](https://docs.docker.com/get-docker/) on your 
     ```
 3. Once the services are up, the website will be accessible at `http://127.0.0.1:8000`.
 
+## Testing
+
+1. Tests can be ran in Docker web container:
+    ```bash
+    python manage.py test
+    ```
+
+2. To run tests in local terminal use docker exec:
+    ```bash
+    docker exec -it giftly-web-1 python manage.py test
+    ```
+
 ## Reporting Issues
 
-If you encounter any bugs or issues, please let us know! We are committed to making continuous improvements to ensure a seamless user experience.
+If you encounter any bugs or issues, please let us know! We are committed to making continuous improvements to ensure a
+seamless user experience.

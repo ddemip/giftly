@@ -22,6 +22,7 @@
                         <a href="{{ product.get_absolute_url }}">
                             <img src="
 
+
                                     {% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}"
                                  alt="">
                         </a>

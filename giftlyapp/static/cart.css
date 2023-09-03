@@ -76,31 +76,31 @@
 
 
 .order-confirmation {
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border: 1px solid #ddd;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
 }
 
 h1 {
-  font-size: 24px;
-  color: #333;
+    font-size: 24px;
+    color: #333;
 }
 
 h2 {
-  font-size: 20px;
-  color: #555;
+    font-size: 20px;
+    color: #555;
 }
 
 ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
 
 li {
-  font-size: 16px;
-  color: #777;
+    font-size: 16px;
+    color: #777;
 }
 
 .order-confirmation-container {
@@ -116,8 +116,8 @@ li {
 }
 
 .order-confirmation-box h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
 /* Add more styles as needed */
@@ -186,7 +186,6 @@ li {
     align-items: center; /* Vertically center the product details */
     max-width: 700px;
 }
-
 
 
 .detail-button {

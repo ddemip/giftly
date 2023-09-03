@@ -68,7 +68,7 @@ class Product(models.Model):
     class Meta:
         verbose_name_plural = 'products'
         ordering = ('name',)
-        index_together = (('id', 'slug'), )
+        index_together = (('id', 'slug'),)
 
     def get_absolute_url(self):
         return reverse('product_detail_by_category', args=[self.category.slug, self.slug])

@@ -3,25 +3,28 @@
 
 {% block content %}
 
-<div class="featured-products">
-    <div class="row">
-        {% for product in random_products %}
-        <div class="product">
-            <a href="{{ product.get_absolute_url }}">
-                <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="No Image">
-            </a>
-            <h2>{{ product.name }}</h2>
-            <p>{{ product.price }}€</p>
-            <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Detailid</a>
-        </div>
-        {% if forloop.counter|divisibleby:3 and not forloop.last %}
-            </div><div class="row"> <!-- Start a new row after every 3 products -->
-        {% endif %}
-        {% endfor %}
+    <div class="featured-products">
+        <div class="row">
+            {% for product in random_products %}
+                <div class="product">
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="
+                                {% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}"
+                             alt="No Image">
+                    </a>
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.price }}€</p>
+                    <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Detailid</a>
+                </div>
+                {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                    </div>
+                    <div class="row"> <!-- Start a new row after every 3 products -->
+                {% endif %}
+            {% endfor %}
+            </div>
     </div>
-</div>
-<div class="explore-button">
-    <a href="{% url 'all_products' %}" class="btn btn-primary d-block mx-auto">Vaata rohkem tooteid</a>
-</div>
+    <div class="explore-button">
+        <a href="{% url 'all_products' %}" class="btn btn-primary d-block mx-auto">Vaata rohkem tooteid</a>
+    </div>
 
 {% endblock %}

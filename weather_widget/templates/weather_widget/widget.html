@@ -13,7 +13,7 @@
         align-items: center;
         max-width: 100%;
     }
-    
+
     .weather-widget h2 {
         margin-top: 0;
         color: #333;
@@ -117,7 +117,7 @@
 
                         let todayStr = new Date().toDateString();
                         for (let date in groupedByDay) {
-                            let dayLabel = (todayStr === date) ? "täna" : new Date(date).toLocaleString('et-EE', { weekday: 'long' });
+                            let dayLabel = (todayStr === date) ? "täna" : new Date(date).toLocaleString('et-EE', {weekday: 'long'});
                             content += `
                             <div class="forecast-entry">
                                 <p><strong>${dayLabel}</strong></p>`;

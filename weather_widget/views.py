@@ -5,6 +5,7 @@ API_KEY = 'eafc620f2fa0a2b539b67a1a05ab4aa9'
 GEO_URL = "http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=1&appid={api_key}"
 BASE_URL_FORECAST = "http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={api_key}&units=metric"
 
+
 def get_lat_lon(city):
     """
     Html asks for city input. Forecast needs latitude-longitude instead of city,
@@ -16,6 +17,7 @@ def get_lat_lon(city):
     if not data:
         return None, None
     return data[0]['lat'], data[0]['lon']
+
 
 def get_weather_data(city):
     """
@@ -30,6 +32,7 @@ def get_weather_data(city):
     if response.status_code != 200:
         return None
     return response.json()
+
 
 def fetch_weather(request):
     """

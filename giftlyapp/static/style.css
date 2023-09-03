@@ -96,8 +96,9 @@ body {
 .cart-button {
     display: flex;
     align-items: center;
-    margin-left: auto; /* This will push the cart button to the rightmost part of the flex container,
-                        keeping space between the buttons and cart. */
+    margin-left: auto;
+    /* This will push the cart button to the rightmost part of the flex container,
+                           keeping space between the buttons and cart. */
 }
 
 
@@ -192,19 +193,18 @@ body {
     align-items: center;
     padding: 20px;
     margin-bottom: 10px;
-    /*border: 5px solid #ddd;*/
     background-color: white;
     width: 100%; /* Take full width of the grid column */
-    /*border-radius: 5px;*/
 }
+
 /*Makes links under .product black instead of underlined link look*/
 .product a {
     color: black;
     text-decoration: none;
- }
+}
 
-.product:hover{
-    background-color: rgba(0, 84, 84, 0.14);  /* This is a light grey color. Change it to whatever you want */
+.product:hover {
+    background-color: rgba(0, 84, 84, 0.14); /* This is a light grey color. Change it to whatever you want */
     transition: background-color 0.3s ease; /* Optional: This will make the color change smoothly */
 }
 
@@ -244,9 +244,9 @@ body {
 .weather-widget-container {
     width: 100%;
     display: flex;
-    justify-content: center;  /* horizontally center */
-    align-items: center;      /* vertically center */
-    flex-direction: column;   /* stack vertically */
+    justify-content: center; /* horizontally center */
+    align-items: center; /* vertically center */
+    flex-direction: column; /* stack vertically */
 }
 
 #tallinn-quick-view {
@@ -358,9 +358,9 @@ body {
 .explore-button {
     align-content: center;
     display: flex;
-    justify-content: center;  /* horizontally center */
-    align-items: center;      /* vertically center */
-    flex-direction: column;   /* stack vertically */
+    justify-content: center; /* horizontally center */
+    align-items: center; /* vertically center */
+    flex-direction: column; /* stack vertically */
     margin-bottom: 40px;
 
 }
@@ -368,9 +368,9 @@ body {
 .explore-button-small {
     align-content: center;
     display: flex;
-    justify-content: center;  /* horizontally center */
-    align-items: center;      /* vertically center */
-    flex-direction: column;   /* stack vertically */
+    justify-content: center; /* horizontally center */
+    align-items: center; /* vertically center */
+    flex-direction: column; /* stack vertically */
     margin-bottom: 40px;
     margin-top: 20px;
 
@@ -389,16 +389,16 @@ body {
 
 .product-detail {
     display: flex;
-    align-items: flex-start;  /* Align items to the top */
+    align-items: flex-start; /* Align items to the top */
     padding: 20px;
     background-color: #f9f9f9;
     max-width: 800px;
     margin: 0 auto 20px auto;
-    position: relative;  /* Added for absolute positioning of child elements */
+    position: relative; /* Added for absolute positioning of child elements */
 }
 
 .product-detail img {
-    margin-right: 20px;  /* Space between the image and details */
+    margin-right: 20px; /* Space between the image and details */
 }
 
 .product-info {
@@ -415,8 +415,6 @@ body {
     right: 20px;
 }
 
-/*Otsingu css proov*/
-
 .search-container {
     position: relative;
     max-width: 300px;
@@ -425,9 +423,9 @@ body {
 .search-input {
     width: 100%;
     border: none;
-    border-bottom: 2px solid black;  /* underline effect */
+    border-bottom: 2px solid black; /* underline effect */
     background-color: transparent;
-    padding: 10px 10px 10px 40px;    /* padding room for magnifying glass */
+    padding: 10px 10px 10px 40px; /* padding room for magnifying glass */
     font-size: 16px;
     outline: none;
 }
@@ -459,8 +457,8 @@ body {
     left: 0;
     background-color: #f9f9f9;
     min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;  /* display on top of other content */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1; /* display on top of other content */
     border: 1px solid #ccc;
     border-radius: 5px; /* round corners */
 }
@@ -483,7 +481,7 @@ body {
     background-color: #ddd;
 }
 
-.cat-heading{
+.cat-heading {
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
@@ -502,7 +500,7 @@ body {
     position: absolute;
     background-color: #f9f9f9;
     min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -530,12 +528,12 @@ body {
     }
 
     .header-buttons, .cart-button {
-        margin-top: 10px;  /* Space between the elements */
+        margin-top: 10px; /* Space between the elements */
     }
 
     .search-container {
         margin-bottom: 10px; /* Space after the search bar */
-        width: 100%;  /* Make search bar full width */
+        width: 100%; /* Make search bar full width */
     }
 
     .search-container .search-input {
@@ -549,28 +547,28 @@ body {
 
     .header-buttons .btn-header {
         flex: 1 1 auto; /* Allow buttons to grow and shrink as needed */
-        display: block;  /* Making buttons full width */
+        display: block; /* Making buttons full width */
         width: 100%;
-        margin: 5px;  /* Small margin for space between stacked buttons */
-        text-align: left;  /* Align text to the left */
+        margin: 5px; /* Small margin for space between stacked buttons */
+        text-align: left; /* Align text to the left */
     }
 
     .dropdown {
         margin-right: 10px;
-        width: 100%;  /* Making dropdown full width */
+        width: 100%; /* Making dropdown full width */
     }
 
     .dropdown-content {
-        display: none;  /* Initially hide dropdown content */
-        width: 100%;  /* Make dropdown content full width */
+        display: none; /* Initially hide dropdown content */
+        width: 100%; /* Make dropdown content full width */
     }
 
     .dropdown:hover .dropdown-content {
-        display: block;  /* Show dropdown content on hover */
+        display: block; /* Show dropdown content on hover */
     }
 
     .parent-category {
-        width: 100%;  /* Making parent-category full width */
+        width: 100%; /* Making parent-category full width */
     }
 
     .child-categories {
@@ -579,8 +577,8 @@ body {
     }
 
     .child-categories a {
-        display: block;  /* Making child links stack vertically */
-        margin-left: 15px;  /* Indent child links for hierarchy */
+        display: block; /* Making child links stack vertically */
+        margin-left: 15px; /* Indent child links for hierarchy */
     }
 
     .cart-button {
@@ -595,20 +593,17 @@ body {
 }
 
 
-/*teised lehed*/
-
-.pagination{
+.pagination {
     display: flex;
     justify-content: center;
     margin-bottom: 50px;
 }
 
 
-
 .product-list-container {
-    max-width: 1200px;  /* This can be adjusted to any desirable width */
-    margin: 0 auto;  /* Centers the container on the page */
-    padding: 20px;  /* Gives some space around the content */
+    max-width: 1200px; /* This can be adjusted to any desirable width */
+    margin: 0 auto; /* Centers the container on the page */
+    padding: 20px; /* Gives some space around the content */
 }
 
 .product-list {
@@ -616,7 +611,7 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     align-items: start;
-    gap: 20px;  /* Provides spacing between items, works better than margin in a flex layout */
+    gap: 20px; /* Provides spacing between items, works better than margin in a flex layout */
 }
 
 
