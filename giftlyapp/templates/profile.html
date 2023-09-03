@@ -2,28 +2,28 @@
 {% load static %}
 
 {% block content %}
-<main class="content">
-    <div class="user-profile">
-        <h2>Kasutaja andmed</h2>
-        <p>Kasutajanimi: {{ user.username }}</p>
-        <p>Eesnimi: {{ user.first_name }}</p>
-        <p>Perekonnanimi: {{ user.last_name }}</p>
-        <p>Email: {{ user.email }}</p>
-    </div>
+    <main class="content">
+        <div class="user-profile">
+            <h2>Kasutaja andmed</h2>
+            <p>Kasutajanimi: {{ user.username }}</p>
+            <p>Eesnimi: {{ user.first_name }}</p>
+            <p>Perekonnanimi: {{ user.last_name }}</p>
+            <p>Email: {{ user.email }}</p>
+        </div>
 
-    <!-- Display messages -->
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+        <!-- Display messages -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
-    <div class="profile-button">
-        <a href="{% url 'update_profile' %}" class="btn btn-search">Uuenda Profiili</a>
-        <a href="{% url 'update_password' %}" class="btn btn-search">Uuenda Parooli</a>
-        <a href="{% url 'check_orders' %}" class="btn btn-search">Tellimuste ajalugu</a>
-    </div>
-</main>
+        <div class="profile-button">
+            <a href="{% url 'update_profile' %}" class="btn btn-search">Uuenda Profiili</a>
+            <a href="{% url 'update_password' %}" class="btn btn-search">Uuenda Parooli</a>
+            <a href="{% url 'check_orders' %}" class="btn btn-search">Tellimuste ajalugu</a>
+        </div>
+    </main>
 {% endblock %}

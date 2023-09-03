@@ -8,26 +8,28 @@
 {% endblock %}
 
 {% block content %}
-<div id="main" class="product-list-container">
-    <div class="cat-heading">
-        <h1>{% if category %}{{ category.name }}{% else %}Kõik tooted{% endif %}</h1>
-    </div>
-    <div class="featured-products">
-        {% for product in page_obj %}
-        <div class="product">
-            <a href="{{ product.get_absolute_url }}">
-                <img src="{% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}" alt="">
-            </a>
-            <a href="{{ product.get_absolute_url }}"><h2>{{ product.name }}</h2></a>
-            <br>
-            <i> {{ product.description|truncatechars:200 }}</i>
-            <br>
-            <p>{{ product.price }}€</p>
+    <div id="main" class="product-list-container">
+        <div class="cat-heading">
+            <h1>{% if category %}{{ category.name }}{% else %}Kõik tooted{% endif %}</h1>
         </div>
-        {% endfor %}
-    </div>
+        <div class="featured-products">
+            {% for product in page_obj %}
+                <div class="product">
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="
+                                {% if product.thumbnail %}{{ product.thumbnail.url }}{% else %}{% get_media_prefix %}visual/no_image.png{% endif %}"
+                             alt="">
+                    </a>
+                    <a href="{{ product.get_absolute_url }}"><h2>{{ product.name }}</h2></a>
+                    <br>
+                    <i> {{ product.description|truncatechars:200 }}</i>
+                    <br>
+                    <p>{{ product.price }}€</p>
+                </div>
+            {% endfor %}
+        </div>
 
-    <div class="pagination">
+        <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
                 <a href="?page=1">&laquo; first</a>
@@ -43,6 +45,6 @@
                 <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
+        </div>
     </div>
-</div>
 {% endblock %}
