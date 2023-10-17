@@ -142,7 +142,7 @@ def cart_add(request, product_id):
     cart = CustomShoppingCart(request)
     cart.add(product=product, quantity=quantity, update_quantity=True)
 
-    return redirect('cart_view')
+    return redirect('cart_detail')
 
 
 @login_required
